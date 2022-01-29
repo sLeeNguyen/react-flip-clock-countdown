@@ -28,16 +28,23 @@
     "prepare": "run-s build",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
-    "test:lint": "eslint .",
+    "test:lint": "lint:staged",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "predeploy": "cd example && npm install && npm run build",
     "deploy": "gh-pages -d example/build",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "lint:staged": "lint-staged"
   },
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --fix",
+    "*.{ts,js,jsx,tsx,json,yml,md}": [
+      "prettier --write"
     ]
   },
   "dependencies": {
@@ -80,7 +87,8 @@
     "@commitlint/config-conventional": "^16.0.0",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
-    "husky": "^7.0.4"
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.4"
   },
   "files": [
     "dist"
