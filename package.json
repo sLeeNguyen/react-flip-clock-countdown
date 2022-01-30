@@ -1,6 +1,6 @@
 {
   "name": "@leenguyen/react-flip-clock-countdown",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A 3D animated countdown component for React.",
   "author": "leenguyen",
   "license": "MIT",
