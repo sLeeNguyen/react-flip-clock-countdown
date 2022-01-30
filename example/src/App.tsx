@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 
-import { ExampleComponent } from 'react-flip-clock-countdown'
-import 'react-flip-clock-countdown/dist/index.css'
+import FlipClockCountDown from 'react-flip-clock-countdown';
+import 'react-flip-clock-countdown/dist/index.css';
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
-}
+  return <FlipClockCountDown to={new Date().getTime() + 24 * 3600 * 1000 + 5000} />;
+};
 
-export default App
+export default App;

@@ -1,9 +1,127 @@
-/* add css module styles here (optional) */
+:root {
+  --fcc-flip-duration: 0.7s;
+  --fcc-digit-block-width: 46px;
+  --fcc-digit-block-height: 80px;
+  --fcc-digit-font-size: 50px;
+  --fcc-background: #0f181a;
+  --fcc-label-color: #ffffff;
+  --fcc-digit-color: #ffffff;
+}
 
-.test {
-  margin: 2em;
-  padding: 0.5em;
-  border: 2px solid #000;
-  font-size: 2em;
-  text-align: center;
+.fcc__container {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  font-size: var(--fcc-digit-font-size);
+  color: var(--fcc-digit-color);
+  line-height: 0;
+  font-weight: 500;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  cursor: default;
+  display: flex;
+  align-items: center;
+}
+
+.fcc__digit_block_container .fcc__digit_block:not(:last-child) {
+  margin-right: 4px;
+}
+
+.fcc__digit_block_container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.fcc__digit_block_label {
+  color: var(--fcc-digit-color);
+  line-height: 1;
+  font-weight: 400;
+  font-size: 16px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 150%);
+  text-transform: capitalize;
+}
+
+.fcc__digit_block {
+  perspective: 200px;
+  position: relative;
+  width: var(--fcc-digit-block-width);
+  height: var(--fcc-digit-block-height);
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.fcc__current_below,
+.fcc__next_above {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  background: var(--fcc-background);
+}
+
+.fcc__next_above {
+  align-items: flex-end;
+  top: 0;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom: 1px solid #ffffff66;
+}
+
+.fcc__current_below {
+  align-items: flex-start;
+  bottom: 0;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.fcc__card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 50%;
+  transform-style: preserve-3d;
+  transform-origin: bottom;
+  transform: rotateX(0);
+}
+
+.fcc__card.fcc__flipped {
+  transition: transform var(--fcc-flip-duration) ease-in-out;
+  transform: rotateX(-180deg);
+}
+
+.fcc__card_face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  backface-visibility: hidden;
+  background: var(--fcc-background);
+}
+
+.fcc__card_face_front {
+  align-items: flex-end;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom: 1px solid #ffffff66;
+}
+
+.fcc__card_face_back {
+  align-items: flex-start;
+  transform: rotateX(-180deg);
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.fcc__colon {
+  margin-left: 8px;
+  margin-right: 8px;
+  line-height: 1;
 }
