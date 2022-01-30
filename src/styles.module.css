@@ -6,6 +6,7 @@
   --fcc-background: #0f181a;
   --fcc-label-color: #ffffff;
   --fcc-digit-color: #ffffff;
+  --fcc-divider-color: #ffffff66;
 }
 
 .fcc__container {
@@ -34,7 +35,7 @@
 }
 
 .fcc__digit_block_label {
-  color: var(--fcc-digit-color);
+  color: var(--fcc-label-color);
   line-height: 1;
   font-weight: 400;
   font-size: 16px;
@@ -70,7 +71,7 @@
   top: 0;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  border-bottom: 1px solid #ffffff66;
+  border-bottom: 1px solid var(--fcc-divider-color);
 }
 
 .fcc__current_below {
@@ -110,7 +111,7 @@
   align-items: flex-end;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  border-bottom: 1px solid #ffffff66;
+  border-bottom: 1px solid var(--fcc-divider-color);
 }
 
 .fcc__card_face_back {
