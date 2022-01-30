@@ -2,7 +2,7 @@
 
 > A 3D animated countdown component for React.
 
-[![NPM](https://img.shields.io/npm/v/react-flip-clock-countdown.svg)](https://www.npmjs.com/package/react-flip-clock-countdown) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-flip-clock-countdown.svg)](https://www.npmjs.com/package/@leenguyen/react-flip-clock-countdown) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 <div align="center">
   <img src="./resources/demo.gif" alt="react flip clock countdown demo" width="500" />
