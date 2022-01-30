@@ -13,14 +13,14 @@ npm install --save react-flip-clock-countdown
 ## Usage
 
 ```tsx
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import MyComponent from 'react-flip-clock-countdown'
-import 'react-flip-clock-countdown/dist/index.css'
+import FlipClockCountdown from 'react-flip-clock-countdown';
+import 'react-flip-clock-countdown/dist/index.css';
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return <FlipClockCountdown to={new Date().getTime() + 24 * 3600 * 1000 + 5000} />;
   }
 }
 ```
