@@ -11,7 +11,7 @@
 ## Install
 
 ```bash
-npm install --save react-flip-clock-countdown
+npm install --save @leenguyen/react-flip-clock-countdown
 ```
 
 ## Usage
@@ -19,8 +19,8 @@ npm install --save react-flip-clock-countdown
 ```tsx
 import React, { Component } from 'react';
 
-import FlipClockCountdown from 'react-flip-clock-countdown';
-import 'react-flip-clock-countdown/dist/index.css';
+import FlipClockCountdown from '@leenguyen/react-flip-clock-countdown';
+import '@leenguyen/react-flip-clock-countdown/dist/index.css';
 
 class Example extends Component {
   render() {
