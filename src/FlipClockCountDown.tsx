@@ -48,10 +48,11 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
   const countdownRef = React.useRef(0);
 
   React.useEffect(() => {
+    clearTimer();
     countdownRef.current = window.setInterval(tick, 1000);
 
     return () => clearTimer();
-  }, []);
+  }, [to]);
 
   function clearTimer() {
     window.clearInterval(countdownRef.current);
