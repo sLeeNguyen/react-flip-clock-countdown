@@ -22,6 +22,7 @@
   cursor: default;
   display: flex;
   align-items: center;
+  margin-bottom: 32px;
 }
 
 .fcc__digit_block_container .fcc__digit_block:not(:last-child) {
