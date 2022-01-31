@@ -13,7 +13,7 @@ type FlipClockDigitState = FlipClockDigitProps;
 
 export default function FlipClockDigit(props: FlipClockDigitProps) {
   const { current, next, className } = props;
-  const [digit, setDigit] = React.useState<FlipClockDigitState>({ current: 0, next: 0 });
+  const [digit, setDigit] = React.useState<FlipClockDigitState>({ current, next });
   const [flipped, setFlipped] = React.useState(false);
 
   React.useEffect(() => {
