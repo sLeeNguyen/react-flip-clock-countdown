@@ -133,7 +133,7 @@ To setup and run a local copy:
 3. Run `npm install` in the **example** folder
 4. In seperate terminal windows, run `npm start` in the **root** and **example** folders.
 
-When you're done working on your changes, feel free to send PRs with the details and include a screenshot if you've changed anything visually..
+When you're done working on your changes, feel free to send PRs with the details and include a screenshot if you've changed anything visually.
 
 ## License
 
