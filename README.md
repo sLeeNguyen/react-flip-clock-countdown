@@ -84,40 +84,86 @@ class RenderByUsingCallback extends Component {
 }
 ```
 
+### Render a countdown with custom styles
+
+```tsx
+import React, { Component } from 'react';
+
+import FlipClockCountdown from '@leenguyen/react-flip-clock-countdown';
+import '@leenguyen/react-flip-clock-countdown/dist/index.css';
+import 'styles.css';
+
+class Example extends Component {
+  render() {
+    return <FlipClockCountdown className='flip-clock' to={new Date().getTime() + 24 * 3600 * 1000 + 5000} />;
+  }
+}
+```
+
+```css
+/* styles.css */
+
+.flip-clock {
+  --fcc-flip-duration: 0.5s; /* transition duration when flip card */
+  --fcc-digit-block-width: 40px; /* digit card's width */
+  --fcc-digit-block-height: 64px; /* digit card's height */
+  --fcc-digit-font-size: 50px; /* font size of digit */
+  --fcc-digit-color: white; /* color of digit */
+  --fcc-background: black; /* digit card's background */
+  --fcc-label-color: #ffffff; /* time label's color */
+  --fcc-divider-color: #ffffff66; /* divider's color */
+}
+```
+
 ## Props
 
-| Name                                  |                   Type                    | Required |        Default         | Description                                                                               |
-| :------------------------------------ | :---------------------------------------: | :------: | :--------------------: | :---------------------------------------------------------------------------------------- |
-| [**to**](#to)                         | <code>Date&#124;string&#124;number</code> |   yes    |                        | <code>Date</code> or timestamp in the future                                              |
-| [**className**](#classname)           |            <code>string</code>            |    no    | <code>undefined</code> | Classes applied to flip clock container                                                   |
-| [**containerProps**](#containerprops) |            <code>object</code>            |    no    | <code>undefined</code> | Props applied to the flip clock container                                                 |
-| [**children**](#children)             |             <code>node</code>             |    no    | <code>undefined</code> | React child component which will only be shown once the countdown is complete             |
-| [**onComplete**](#oncomplete)         |             <code>func</code>             |    no    |                        | Callback when countdown ends<br/> **Signature:**<br/> <code>function() => void</code>     |
-| [**onTick**](#ontick)                 |             <code>func</code>             |    no    |                        | Callback on every interval tick<br /> **Signature:**<br/> <code>function() => void</code> |
+| Name                                  |                   Type                    | Required |        Default         | Description                                                                                                                                                                                                                                                                              |
+| :------------------------------------ | :---------------------------------------: | :------: | :--------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [**to**](#to)                         | <code>Date&#124;string&#124;number</code> |   yes    |                        | <code>Date</code> or timestamp in the future                                                                                                                                                                                                                                             |
+| [**className**](#classname)           |            <code>string</code>            |    no    | <code>undefined</code> | Classes applied to flip clock container                                                                                                                                                                                                                                                  |
+| [**containerProps**](#containerprops) |            <code>object</code>            |    no    | <code>undefined</code> | Props applied to the flip clock container                                                                                                                                                                                                                                                |
+| [**children**](#children)             |             <code>node</code>             |    no    | <code>undefined</code> | React child component which will only be shown once the countdown is complete                                                                                                                                                                                                            |
+| [**onComplete**](#oncomplete)         |             <code>func</code>             |    no    |                        | Callback when countdown ends<br/> **Signature**:<br/>`function() => void`                                                                                                                                                                                                                |
+| [**onTick**](#ontick)                 |             <code>func</code>             |    no    |                        | Callback on every interval tick<br /> **Signature**:<br/>`function({ timeDelta, completed }) => void`<br/> - `timeDelta: { total: number, days: number, hours: number, minutes: number, seconds: number}` the remaining time in formatted <br/> - `completed: boolean` countdown's state |
 
 ### `to`
 
-updating...
+The `to` prop can be a [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) object, `string`, or timestamp in the future. This date is compared with the current date.
+
+Valid values can be _(and more)_:
+
+- `'2022-02-08T14:27:32.635Z'` // [`Date` time string format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse#Date_Time_String_Format)
+- `1644330452635` // Timestamp in milliseconds
+- `new Date(1644330452635)` // [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) object
 
 ### `className`
 
-updating...
+Class names applied to flip clock container element. Use it to custom flip-clock's styles. See [example](#render-a-countdown-with-custom-styles)
 
 ### `containerProps`
 
-updating...
+`HTMLDivElement`'s props
 
 ### `children`
 
-updating...
+This component also considers the child that may live within the `<FlipClockCountdown></FlipClockCountdown>` element, which, in case it's available, replaces the countdown's component state once it's complete. See [example](#render-a-react-component-when-countdown-is-complete).
 
 ### `onComplete`
 
-updating...
+Callback when countdown ends.
+
+`function() => void`
+
+See [example](#render-a-react-component-when-countdown-is-complete).
 
 ### `onTick`
 
-updating...
+Callback on every interval tick.
+
+`function({ timeDelta, completed }) => void`
+
+- `timeDelta: { total: number, days: number, hours: number, minutes: number, seconds: number}` - the remaining time in formatted.
+- `completed: boolean` - countdown's state.
 
 ## Contributing
 
