@@ -4,8 +4,8 @@
   --fcc-digit-block-height: 80px;
   --fcc-digit-font-size: 50px;
   --fcc-label-font-size: 16px;
-  --fcc-background: #0f181a;
   --fcc-label-color: #ffffff;
+  --fcc-background: #0f181a;
   --fcc-digit-color: #ffffff;
   --fcc-divider-color: #ffffff66;
 }
@@ -23,7 +23,7 @@
   cursor: default;
   display: flex;
   align-items: center;
-  margin-bottom: 32px;
+  margin-bottom: calc(2 * var(--fcc-label-font-size));
 }
 
 .fcc__digit_block_container .fcc__digit_block:not(:last-child) {

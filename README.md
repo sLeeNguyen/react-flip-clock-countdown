@@ -118,14 +118,14 @@ class Example extends Component {
 
 ## Props
 
-| Name                                  |                   Type                    | Required |        Default         | Description                                                                                           |
-| :------------------------------------ | :---------------------------------------: | :------: | :--------------------: | :---------------------------------------------------------------------------------------------------- |
-| [**to**](#to)                         | <code>Date&#124;string&#124;number</code> |   yes    |                        | <code>Date</code> or timestamp in the future                                                          |
-| [**className**](#classname)           |            <code>string</code>            |    no    | <code>undefined</code> | Classes applied to flip clock container                                                               |
-| [**containerProps**](#containerprops) |            <code>object</code>            |    no    | <code>undefined</code> | Props applied to the flip clock container                                                             |
-| [**children**](#children)             |             <code>node</code>             |    no    | <code>undefined</code> | React child component which will only be shown once the countdown is complete                         |
-| [**onComplete**](#oncomplete)         |             <code>func</code>             |    no    |                        | Callback when countdown ends<br/> **Signature**:<br/>`function() => void`                             |
-| [**onTick**](#ontick)                 |             <code>func</code>             |    no    |                        | Callback on every interval tick<br /> **Signature**:<br/>`function({ timeDelta, completed }) => void` |
+The <code>FlipClockCountdown</code> has all properties of `div` and additional props below
+
+| Name                                      |                   Type                    | Required |        Default         | Description                                                                                                                                  |
+| :---------------------------------------- | :---------------------------------------: | :------: | :--------------------: | :------------------------------------------------------------------------------------------------------------------------------------------- |
+| [**to**](#to)                             | <code>Date&#124;string&#124;number</code> |   yes    |                        | <code>Date</code> or timestamp in the future                                                                                                 |
+| [~~**containerProps**~~](#containerprops) |            <code>object</code>            |    no    | <code>undefined</code> | Props apply to the flip clock container. This prop is deprecated, you should apply directly to the <code>FlipClockCountdown</code> component |
+| [**onComplete**](#oncomplete)             |             <code>func</code>             |    no    |                        | Callback when countdown ends<br/> **Signature**:<br/>`function() => void`                                                                    |
+| [**onTick**](#ontick)                     |             <code>func</code>             |    no    |                        | Callback on every interval tick<br /> **Signature**:<br/>`function({ timeDelta, completed }) => void`                                        |
 
 ### `to`
 
@@ -143,7 +143,7 @@ Class names applied to flip clock container element. Use it to custom flip-clock
 
 ### `containerProps`
 
-`HTMLDivElement`'s props
+All props of `div`
 
 ### `children`
 

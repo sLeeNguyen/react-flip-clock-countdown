@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import clsx from 'clsx';
 import { calcTimeDelta, FlipClockCountdownUnitTimeFormatted, parseTimeDelta } from './utils';
 import styles from './styles.module.css';
@@ -19,13 +19,15 @@ export interface FlipClockCountdownState {
 
 export type FlipClockCountdownTimeDeltaFn = (props: FlipClockCountdownState) => void;
 
-export interface FlipClockCountdownProps {
+export interface FlipClockCountdownProps
+  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   readonly to: Date | number | string;
-  readonly children?: React.ReactElement<any>;
-  readonly className?: string;
+  /**
+   * @deprecated
+   */
   readonly containerProps?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
-  readonly onComplete?: () => void;
-  readonly onTick?: FlipClockCountdownTimeDeltaFn;
+  readonly onComplete: () => void;
+  readonly onTick: FlipClockCountdownTimeDeltaFn;
 }
 
 export interface FlipClockCountdownTimeDeltaFormatted {
@@ -43,16 +45,9 @@ export interface FlipClockCountdownRenderProps extends FlipClockCountdownTimeDel
  * A 3D animated flip clock countdown component for React.
  */
 function FlipClockCountdown(props: FlipClockCountdownProps) {
-  const { to, className, containerProps, children, onComplete = () => {}, onTick = () => {} } = props;
+  const { to, className, children, onComplete, onTick, ...other } = props;
   const [state, setState] = React.useState<FlipClockCountdownState>(constructState);
   const countdownRef = React.useRef(0);
-
-  React.useEffect(() => {
-    clearTimer();
-    countdownRef.current = window.setInterval(tick, 1000);
-
-    return () => clearTimer();
-  }, [to]);
 
   function clearTimer() {
     window.clearInterval(countdownRef.current);
@@ -76,24 +71,30 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     }
   }
 
-  function getRenderProps(): FlipClockCountdownRenderProps {
+  React.useEffect(() => {
+    clearTimer();
+    countdownRef.current = window.setInterval(tick, 1000);
+
+    return () => clearTimer();
+  }, [to]);
+
+  const renderProps = useMemo<FlipClockCountdownRenderProps>(() => {
     const { timeDelta } = state;
     return {
       ...timeDelta,
       formatted: parseTimeDelta(timeDelta)
     };
-  }
+  }, [state]);
 
   if (state?.completed) {
     return <React.Fragment>{children}</React.Fragment>;
   }
 
-  const renderProps = getRenderProps();
   const { days, hours, minutes, seconds } = renderProps.formatted;
   const labels = ['days', 'hours', 'minutes', 'seconds'];
 
   return (
-    <div {...containerProps} className={clsx(styles.fcc__container, className)}>
+    <div {...other} className={clsx(styles.fcc__container, className)}>
       {[days, hours, minutes, seconds].map((item, idx) => {
         return (
           <React.Fragment key={`digit-block-${idx}`}>
@@ -110,4 +111,10 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     </div>
   );
 }
+
+FlipClockCountdown.defaultProps = {
+  onComplete: () => {},
+  onTick: () => {}
+};
+
 export default FlipClockCountdown;
