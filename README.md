@@ -108,6 +108,7 @@ class Example extends Component {
   --fcc-digit-block-width: 40px; /* digit card's width */
   --fcc-digit-block-height: 64px; /* digit card's height */
   --fcc-digit-font-size: 50px; /* font size of digit */
+  --fcc-label-font-size: 16px; /* font size of label */
   --fcc-digit-color: white; /* color of digit */
   --fcc-background: black; /* digit card's background */
   --fcc-label-color: #ffffff; /* time label's color */

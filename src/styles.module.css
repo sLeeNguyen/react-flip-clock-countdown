@@ -3,6 +3,7 @@
   --fcc-digit-block-width: 46px;
   --fcc-digit-block-height: 80px;
   --fcc-digit-font-size: 50px;
+  --fcc-label-font-size: 16px;
   --fcc-background: #0f181a;
   --fcc-label-color: #ffffff;
   --fcc-digit-color: #ffffff;
@@ -39,7 +40,7 @@
   color: var(--fcc-label-color);
   line-height: 1;
   font-weight: 400;
-  font-size: 16px;
+  font-size: var(--fcc-label-font-size);
   position: absolute;
   bottom: 0;
   left: 50%;
