@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 import styles from './styles.module.css';
-import { Digit } from './utils';
+import { Digit } from './typings';
 
 export interface FlipClockDigitProps {
   current: Digit;

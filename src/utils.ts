@@ -1,18 +1,4 @@
-import { FlipClockCountdownTimeDelta } from '.';
-
-export type Digit = number | string;
-
-export interface FlipClockCountdownUnitTimeFormatted {
-  readonly current: Digit[];
-  readonly next: Digit[];
-}
-
-export interface FlipClockCountdownTimeDeltaFormatted {
-  readonly days: FlipClockCountdownUnitTimeFormatted;
-  readonly hours: FlipClockCountdownUnitTimeFormatted;
-  readonly minutes: FlipClockCountdownUnitTimeFormatted;
-  readonly seconds: FlipClockCountdownUnitTimeFormatted;
-}
+import { Digit, FlipClockCountdownTimeDelta, FlipClockCountdownTimeDeltaFormatted } from './typings';
 
 export const defaultTimeDelta = {
   total: 0,

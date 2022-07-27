@@ -1,0 +1,24 @@
+{
+  "name": "react-fliplock-countdown-example-nextjs",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "leenguyen",
+  "license": "MIT",
+  "dependencies": {
+    "next": "^12.2.3",
+    "react": "file:../../node_modules/react",
+    "react-dom": "file:../../node_modules/react-dom",
+    "react-flip-clock-countdown": "file:../.."
+  },
+  "resolutions": {
+    "react": "file:../../node_modules/react",
+    "react-dom": "file:../../node_modules/react-dom"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  }
+}
