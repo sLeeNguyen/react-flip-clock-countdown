@@ -14,6 +14,12 @@
 npm install --save @leenguyen/react-flip-clock-countdown
 ```
 
+Or
+
+```bash
+yarn add @leenguyen/react-flip-clock-countdown
+```
+
 ## Usage
 
 ### Basic usage
@@ -84,7 +90,9 @@ class RenderByUsingCallback extends Component {
 }
 ```
 
-### Render a countdown with custom styles
+### Render a custom countdown
+
+#### Example 1
 
 ```tsx
 import React, { Component } from 'react';
@@ -95,7 +103,42 @@ import 'styles.css';
 
 class Example extends Component {
   render() {
-    return <FlipClockCountdown className='flip-clock' to={new Date().getTime() + 24 * 3600 * 1000 + 5000} />;
+    return (
+      <FlipClockCountdown
+        to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
+        labels={['DAYS', 'HOURS', 'MINUTES', 'SECONDS']}
+        labelStyle={{ fontSize: 10, fontWeight: 500, textTransform: 'uppercase' }}
+        digitBlockStyle={{ width: 40, height: 60, fontSize: 30 }}
+        dividerStyle={{ color: 'white', height: 1 }}
+        separatorStyle={{ color: 'red', size: '6px' }}
+        duration={0.5}
+      >
+        Finished
+      </FlipClockCountdown>
+    );
+  }
+}
+```
+
+#### Example 2
+
+```tsx
+import React, { Component } from 'react';
+
+import FlipClockCountdown from '@leenguyen/react-flip-clock-countdown';
+import '@leenguyen/react-flip-clock-countdown/dist/index.css';
+import 'styles.css';
+
+class Example extends Component {
+  render() {
+    return (
+      <FlipClockCountdown
+        to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
+        className='flip-clock'
+        labels={['DAYS', 'HOURS', 'MINUTES', 'SECONDS']}
+        duration={0.5}
+      />
+    );
   }
 }
 ```
@@ -106,13 +149,16 @@ class Example extends Component {
 .flip-clock {
   --fcc-flip-duration: 0.5s; /* transition duration when flip card */
   --fcc-digit-block-width: 40px; /* width of digit card */
-  --fcc-digit-block-height: 64px; /* height of digit card, highly recommend in even number */
-  --fcc-digit-font-size: 50px; /* font size of digit */
-  --fcc-label-font-size: 16px; /* font size of label */
+  --fcc-digit-block-height: 60px; /* height of digit card, highly recommend in even number */
+  --fcc-digit-font-size: 30px; /* font size of digit */
   --fcc-digit-color: white; /* color of digit */
-  --fcc-background: black; /* background of digit card */
+  --fcc-label-font-size: 10px; /* font size of label */
   --fcc-label-color: #ffffff; /* color of label */
-  --fcc-divider-color: #ffffff66; /* color of divider */
+  --fcc-background: black; /* background of digit card */
+  --fcc-divider-color: white; /* color of divider */
+  --fcc-divider-height: 1px; /* height of divider */
+  --fcc-separator-size: 6px; /* size of colon */
+  --fcc-separator-color: red; /* color of colon */
 }
 ```
 
@@ -120,12 +166,19 @@ class Example extends Component {
 
 The <code>FlipClockCountdown</code> has all properties of `div` and additional props below
 
-| Name                                      |                   Type                    | Required |        Default         | Description                                                                                                                                  |
-| :---------------------------------------- | :---------------------------------------: | :------: | :--------------------: | :------------------------------------------------------------------------------------------------------------------------------------------- |
-| [**to**](#to)                             | <code>Date&#124;string&#124;number</code> |   yes    |                        | <code>Date</code> or timestamp in the future                                                                                                 |
-| [~~**containerProps**~~](#containerprops) |            <code>object</code>            |    no    | <code>undefined</code> | Props apply to the flip clock container. This prop is deprecated, you should apply directly to the <code>FlipClockCountdown</code> component |
-| [**onComplete**](#oncomplete)             |             <code>func</code>             |    no    |                        | Callback when countdown ends<br/> **Signature**:<br/>`function() => void`                                                                    |
-| [**onTick**](#ontick)                     |             <code>func</code>             |    no    |                        | Callback on every interval tick<br /> **Signature**:<br/>`function({ timeDelta, completed }) => void`                                        |
+| Name                                      |                   Type                    | Required |                       Default                        | Description                                                                                                                                  |
+| :---------------------------------------- | :---------------------------------------: | :------: | :--------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------- |
+| [**to**](#to)                             | <code>Date&#124;string&#124;number</code> |   yes    |                                                      | <code>Date</code> or timestamp in the future                                                                                                 |
+| [~~**containerProps**~~](#containerprops) |            <code>object</code>            |    no    |                <code>undefined</code>                | Props apply to the flip clock container. This prop is deprecated, you should apply directly to the <code>FlipClockCountdown</code> component |
+| [**onComplete**](#oncomplete)             |             <code>func</code>             |    no    |                                                      | Callback when countdown ends<br/> **Signature**:<br/>`function() => void`                                                                    |
+| [**onTick**](#ontick)                     |             <code>func</code>             |    no    |                                                      | Callback on every interval tick<br /> **Signature**:<br/>`function({ timeDelta, completed }) => void`                                        |
+| **labels**                                |       <code>`Array<string>`</code>        |    no    | <code>['Days', 'Hours', 'Minutes', 'Seconds']</code> | Custom array of labels used to display below each section (day, hour, minute, second)                                                        |
+| **showLabels**                            |           <code>boolean</code>            |    no    |                  <code>true</code>                   | Set it to `false` if you don't want to show the labels                                                                                       |
+| **labelStyle**                            |     <code>React.CSSProperties</code>      |    no    |                <code>undefined</code>                | The styles apply to labels `font-size`, `color`, `width`, `height`, etc                                                                      |
+| **digitBlockStyle**                       |     <code>React.CSSProperties</code>      |    no    |                <code>undefined</code>                | The styles apply to digit blocks like `font-size`, `color`, `width`, `height`, etc                                                           |
+| **separatorStyle**                        |            <code>object</code>            |    no    |                <code>undefined</code>                | The styles apply to separator (colon), includes `size` and `color`                                                                           |
+| **dividerStyle**                          |            <code>object</code>            |    no    |                <code>undefined</code>                | The style will be applied to divider, includes `color` and `height`                                                                          |
+| **duration**                              |            <code>number</code>            |    no    |                   <code>0.7</code>                   | Duration (in second) when flip card. Valid value in range (0, 1)                                                                             |
 
 ### `to`
 

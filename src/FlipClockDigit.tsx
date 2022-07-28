@@ -1,18 +1,19 @@
 import clsx from 'clsx';
 import React from 'react';
 import styles from './styles.module.css';
-import { Digit } from './utils';
+import { Digit, FlipClockCountdownProps } from './types';
 
 export interface FlipClockDigitProps {
   current: Digit;
   next: Digit;
   className?: string;
+  style?: FlipClockCountdownProps['digitBlockStyle'];
 }
 
 type FlipClockDigitState = FlipClockDigitProps;
 
 export default function FlipClockDigit(props: FlipClockDigitProps) {
-  const { current, next, className } = props;
+  const { current, next, className, style } = props;
   const [digit, setDigit] = React.useState<FlipClockDigitState>({ current, next });
   const [flipped, setFlipped] = React.useState(false);
 
@@ -33,7 +34,7 @@ export default function FlipClockDigit(props: FlipClockDigitProps) {
   };
 
   return (
-    <div className={clsx(styles.fcc__digit_block, className)}>
+    <div className={clsx(styles.fcc__digit_block, className)} style={style}>
       <div className={styles.fcc__next_above}>{digit.next}</div>
       <div className={styles.fcc__current_below}>{digit.current}</div>
       <div className={clsx(styles.fcc__card, { [styles.fcc__flipped]: flipped })} onTransitionEnd={handleTransitionEnd}>

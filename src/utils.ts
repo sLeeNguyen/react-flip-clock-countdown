@@ -1,18 +1,4 @@
-import { FlipClockCountdownTimeDelta } from '.';
-
-export type Digit = number | string;
-
-export interface FlipClockCountdownUnitTimeFormatted {
-  readonly current: Digit[];
-  readonly next: Digit[];
-}
-
-export interface FlipClockCountdownTimeDeltaFormatted {
-  readonly days: FlipClockCountdownUnitTimeFormatted;
-  readonly hours: FlipClockCountdownUnitTimeFormatted;
-  readonly minutes: FlipClockCountdownUnitTimeFormatted;
-  readonly seconds: FlipClockCountdownUnitTimeFormatted;
-}
+import { Digit, FlipClockCountdownTimeDelta, FlipClockCountdownTimeDeltaFormatted } from './types';
 
 export const defaultTimeDelta = {
   total: 0,
@@ -40,10 +26,8 @@ export function calcTimeDelta(target: Date | number | string): FlipClockCountdow
   };
 }
 
-export function parseTimeUnit(n: number): Digit[] {
-  let preLen = 2 - String(n).length;
-  if (preLen < 0) preLen = 0;
-  return ('0'.repeat(preLen) + String(n)).split('');
+export function pad(n: number): Digit[] {
+  return ('0'.repeat(Math.max(0, 2 - String(n).length)) + String(n)).split('');
 }
 
 export function parseTimeDelta(timeDelta: FlipClockCountdownTimeDelta): FlipClockCountdownTimeDeltaFormatted {
@@ -51,20 +35,26 @@ export function parseTimeDelta(timeDelta: FlipClockCountdownTimeDelta): FlipCloc
 
   return {
     days: {
-      current: parseTimeUnit(timeDelta.days),
-      next: parseTimeUnit(nextTimeDelta.days)
+      current: pad(timeDelta.days),
+      next: pad(nextTimeDelta.days)
     },
     hours: {
-      current: parseTimeUnit(timeDelta.hours),
-      next: parseTimeUnit(nextTimeDelta.hours)
+      current: pad(timeDelta.hours),
+      next: pad(nextTimeDelta.hours)
     },
     minutes: {
-      current: parseTimeUnit(timeDelta.minutes),
-      next: parseTimeUnit(nextTimeDelta.minutes)
+      current: pad(timeDelta.minutes),
+      next: pad(nextTimeDelta.minutes)
     },
     seconds: {
-      current: parseTimeUnit(timeDelta.seconds),
-      next: parseTimeUnit(nextTimeDelta.seconds)
+      current: pad(timeDelta.seconds),
+      next: pad(nextTimeDelta.seconds)
     }
   };
+}
+
+export function convertToPx(n?: string | number): string | undefined {
+  if (n === undefined) return undefined;
+  if (typeof n === 'string') return n;
+  return `${n}px`;
 }

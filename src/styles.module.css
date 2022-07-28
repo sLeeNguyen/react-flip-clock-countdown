@@ -1,4 +1,4 @@
-:root {
+.fcc__container {
   --fcc-flip-duration: 0.7s;
   --fcc-digit-block-width: 46px;
   --fcc-digit-block-height: 80px;
@@ -8,11 +8,14 @@
   --fcc-background: #0f181a;
   --fcc-digit-color: #ffffff;
   --fcc-divider-color: #ffffff66;
+  --fcc-divider-height: 1px;
+  --fcc-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  --fcc-separator-size: 5px;
+  --fcc-separator-color: var(--fcc-digit-color);
 }
 
 .fcc__container {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-    "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: inherit;
   font-size: var(--fcc-digit-font-size);
   color: var(--fcc-digit-color);
   line-height: 0;
@@ -23,6 +26,9 @@
   cursor: default;
   display: flex;
   align-items: center;
+}
+
+.fcc__label_show .fcc__digit_block_container {
   margin-bottom: calc(2 * var(--fcc-label-font-size));
 }
 
@@ -45,7 +51,6 @@
   bottom: 0;
   left: 50%;
   transform: translate(-50%, 150%);
-  text-transform: capitalize;
 }
 
 .fcc__digit_block {
@@ -53,7 +58,7 @@
   position: relative;
   width: var(--fcc-digit-block-width);
   height: var(--fcc-digit-block-height);
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--fcc-shadow);
   border-radius: 4px;
 }
 
@@ -73,7 +78,7 @@
   top: 0;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  border-bottom: 1px solid var(--fcc-divider-color);
+  border-bottom: var(--fcc-divider-height) solid var(--fcc-divider-color);
 }
 
 .fcc__current_below {
@@ -113,7 +118,7 @@
   align-items: flex-end;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  border-bottom: 1px solid var(--fcc-divider-color);
+  border-bottom: var(--fcc-divider-height) solid var(--fcc-divider-color);
 }
 
 .fcc__card_face_back {
@@ -126,5 +131,26 @@
 .fcc__colon {
   margin-left: 8px;
   margin-right: 8px;
-  line-height: 1;
+  height: var(--fcc-digit-block-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.fcc__label_show .fcc__colon {
+  margin-bottom: calc(2 * var(--fcc-label-font-size));
+}
+
+.fcc__colon::before,
+.fcc__colon::after {
+  content: "";
+  width: var(--fcc-separator-size);
+  height: var(--fcc-separator-size);
+  border-radius: 50%;
+  background-color: var(--fcc-separator-color);
+}
+
+.fcc__colon::before {
+  margin-bottom: var(--fcc-separator-size);
 }
