@@ -14,6 +14,12 @@
 npm install --save @leenguyen/react-flip-clock-countdown
 ```
 
+Or
+
+```bash
+yarn add @leenguyen/react-flip-clock-countdown
+```
+
 ## Usage
 
 ### Basic usage

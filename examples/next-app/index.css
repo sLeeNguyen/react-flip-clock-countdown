@@ -25,3 +25,15 @@ body {
   width: 100vw;
   background-color: teal;
 }
+
+.flip-clock {
+  --fcc-flip-duration: 0.8s; /* transition duration when flip card */
+  --fcc-digit-block-width: 40px; /* width of digit card */
+  --fcc-digit-block-height: 64px; /* height of digit card, highly recommend in even number */
+  --fcc-digit-font-size: 40px; /* font size of digit */
+  --fcc-label-font-size: 16px; /* font size of label */
+  --fcc-digit-color: white; /* color of digit */
+  --fcc-background: black; /* background of digit card */
+  --fcc-label-color: #ffffff; /* color of label */
+  --fcc-divider-color: #ffffff66; /* color of divider */
+}

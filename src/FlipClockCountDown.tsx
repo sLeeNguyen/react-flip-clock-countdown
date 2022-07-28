@@ -2,17 +2,33 @@ import clsx from 'clsx';
 import React from 'react';
 import FlipClockDigit from './FlipClockDigit';
 import styles from './styles.module.css';
-import { FlipClockCountdownProps, FlipClockCountdownRenderProps, FlipClockCountdownState } from './typings';
-import { calcTimeDelta, parseTimeDelta } from './utils';
+import { FlipClockCountdownProps, FlipClockCountdownRenderProps, FlipClockCountdownState } from './types';
+import { calcTimeDelta, convertToPx, parseTimeDelta } from './utils';
 
 /**
  * A 3D animated flip clock countdown component for React.
  */
 function FlipClockCountdown(props: FlipClockCountdownProps) {
-  const { to, className, children, onComplete, onTick, ...other } = props;
+  const {
+    to,
+    className,
+    style,
+    children,
+    onComplete,
+    onTick,
+    showLabels,
+    labels,
+    labelStyle,
+    digitBlockStyle,
+    separatorStyle,
+    dividerStyle,
+    duration,
+    ...other
+  } = props;
+  // we don't immediately construct the initial state here because it might
+  // lead to some bugs with server-side rendering and hydration.
   const [state, setState] = React.useState<FlipClockCountdownState>();
   const countdownRef = React.useRef(0);
-
   function clearTimer() {
     window.clearInterval(countdownRef.current);
   }
@@ -43,9 +59,38 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     return () => clearTimer();
   }, [to]);
 
+  const containerStyles = React.useMemo<React.CSSProperties>(() => {
+    const s = {
+      '--fcc-flip-duration': duration === undefined || duration < 0 || duration > 1 ? undefined : `${duration}s`,
+      '--fcc-digit-block-width': convertToPx(digitBlockStyle?.width),
+      '--fcc-digit-block-height': convertToPx(digitBlockStyle?.height),
+      '--fcc-shadow': digitBlockStyle?.boxShadow,
+      '--fcc-digit-font-size': convertToPx(digitBlockStyle?.fontSize),
+      '--fcc-digit-color': digitBlockStyle?.color,
+      '--fcc-label-font-size': convertToPx(labelStyle?.fontSize),
+      '--fcc-label-color': labelStyle?.color,
+      '--fcc-divider-color': dividerStyle?.color,
+      '--fcc-divider-height': convertToPx(dividerStyle?.height),
+      '--fcc-background': digitBlockStyle?.background || digitBlockStyle?.backgroundColor,
+      '--fcc-separator-size': convertToPx(separatorStyle?.size),
+      '--fcc-separator-color': separatorStyle?.color,
+      ...style
+    };
+
+    if (digitBlockStyle) {
+      digitBlockStyle.background = undefined;
+      digitBlockStyle.backgroundColor = undefined;
+      digitBlockStyle.width = undefined;
+      digitBlockStyle.height = undefined;
+      digitBlockStyle.boxShadow = undefined;
+      digitBlockStyle.fontSize = undefined;
+      digitBlockStyle.color = undefined;
+    }
+    return s;
+  }, [style, digitBlockStyle, labelStyle, duration, dividerStyle]);
+
   const renderProps = React.useMemo<FlipClockCountdownRenderProps | undefined>(() => {
     if (state === undefined) return undefined;
-
     const { timeDelta } = state;
     return {
       ...timeDelta,
@@ -53,27 +98,42 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     };
   }, [state]);
 
-  if (state === undefined || renderProps === undefined) return null;
+  if (state === undefined || renderProps === undefined) return <React.Fragment></React.Fragment>;
 
   if (state?.completed) {
     return <React.Fragment>{children}</React.Fragment>;
   }
 
   const { days, hours, minutes, seconds } = renderProps.formatted;
-  const labels = ['days', 'hours', 'minutes', 'seconds'];
+  const _labels = labels.length >= 4 ? labels : ['Days', 'Hours', 'Minutes', 'Seconds'];
 
   return (
-    <div {...other} className={clsx(styles.fcc__container, className)}>
+    <div
+      {...other}
+      className={clsx(
+        styles.fcc__container,
+        {
+          [styles.fcc__label_show]: showLabels
+        },
+        className
+      )}
+      style={containerStyles}
+      data-testid='fcc-container'
+    >
       {[days, hours, minutes, seconds].map((item, idx) => {
         return (
           <React.Fragment key={`digit-block-${idx}`}>
             <div className={styles.fcc__digit_block_container}>
-              <div className={styles.fcc__digit_block_label}>{labels[idx]}</div>
+              {showLabels && (
+                <div className={styles.fcc__digit_block_label} style={labelStyle}>
+                  {_labels[idx]}
+                </div>
+              )}
               {item.current.map((cItem, cIdx) => (
-                <FlipClockDigit key={cIdx} current={cItem} next={item.next[cIdx]} />
+                <FlipClockDigit key={cIdx} current={cItem} next={item.next[cIdx]} style={digitBlockStyle} />
               ))}
             </div>
-            {idx < 3 && <div className={styles.fcc__colon}>:</div>}
+            {idx < 3 && <div className={styles.fcc__colon}></div>}
           </React.Fragment>
         );
       })}
@@ -83,7 +143,9 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
 
 FlipClockCountdown.defaultProps = {
   onComplete: () => {},
-  onTick: () => {}
+  onTick: () => {},
+  labels: ['Days', 'Hours', 'Minutes', 'Seconds'],
+  showLabels: true
 };
 
 export default FlipClockCountdown;
