@@ -87,7 +87,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
       digitBlockStyle.color = undefined;
     }
     return s;
-  }, [style, digitBlockStyle, labelStyle, duration, dividerStyle]);
+  }, [style, digitBlockStyle, labelStyle, duration, dividerStyle, separatorStyle]);
 
   const renderProps = React.useMemo<FlipClockCountdownRenderProps | undefined>(() => {
     if (state === undefined) return undefined;
