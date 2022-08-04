@@ -174,6 +174,7 @@ The <code>FlipClockCountdown</code> has all properties of `div` and additional p
 | [**onTick**](#ontick)                     |             <code>func</code>             |    no    |                                                      | Callback on every interval tick<br /> **Signature**:<br/>`function({ timeDelta, completed }) => void`                                        |
 | **labels**                                |       <code>`Array<string>`</code>        |    no    | <code>['Days', 'Hours', 'Minutes', 'Seconds']</code> | Custom array of labels used to display below each section (day, hour, minute, second)                                                        |
 | **showLabels**                            |           <code>boolean</code>            |    no    |                  <code>true</code>                   | Set it to `false` if you don't want to show the labels                                                                                       |
+| **showSeparators**                        |           <code>boolean</code>            |    no    |                  <code>true</code>                   | Set it to `false` if you don't want to show the separators (colon) between time unit.                                                        |
 | **labelStyle**                            |     <code>React.CSSProperties</code>      |    no    |                <code>undefined</code>                | The styles apply to labels `font-size`, `color`, `width`, `height`, etc                                                                      |
 | **digitBlockStyle**                       |     <code>React.CSSProperties</code>      |    no    |                <code>undefined</code>                | The styles apply to digit blocks like `font-size`, `color`, `width`, `height`, etc                                                           |
 | **separatorStyle**                        |            <code>object</code>            |    no    |                <code>undefined</code>                | The styles apply to separator (colon), includes `size` and `color`                                                                           |
@@ -224,14 +225,14 @@ Callback on every interval tick.
 The package is made up of 2 main folders:
 
 - <code>/src</code> contains the FlipClockCountdown
-- <code>/example</code> is our create-react-app based demo website
+- <code>/examples</code> contains the create-react-app and create-next-app based demo website
 
 To setup and run a local copy:
 
 1. Clone this repo with `https://github.com/sLeeNguyen/react-flip-clock-countdown`
 2. Run `npm install` in the **root** folder
-3. Run `npm install` in the **example** folder
-4. In seperate terminal windows, run `npm start` in the **root** and **example** folders.
+3. Run `npm install` in the **examples/react-app** folder
+4. In separate terminal windows, run `npm start` in the **root** and **examples/react-app** folders.
 
 When you're done working on your changes, feel free to send PRs with the details and include a screenshot if you've changed anything visually.
 
