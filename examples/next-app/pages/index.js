@@ -21,11 +21,18 @@ const Example = () => {
       <div style={{ marginBottom: 30 }}>
         <FlipClockCountdown className='flip-clock' to={new Date().getTime() + 24 * 3600 * 1000 + 5000} />
       </div>
-      <div>
+      <div style={{ marginBottom: 30 }}>
         <FlipClockCountdown
           className='flip-clock'
           to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
           showLabels={false}
+        />
+      </div>
+      <div>
+        <FlipClockCountdown
+          className='flip-clock'
+          to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
+          showSeparators={false}
         />
       </div>
     </React.Fragment>

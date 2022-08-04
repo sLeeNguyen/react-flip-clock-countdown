@@ -17,6 +17,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     onComplete,
     onTick,
     showLabels,
+    showSeparators,
     labels,
     labelStyle,
     digitBlockStyle,
@@ -73,7 +74,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
       '--fcc-divider-height': convertToPx(dividerStyle?.height),
       '--fcc-background': digitBlockStyle?.background || digitBlockStyle?.backgroundColor,
       '--fcc-separator-size': convertToPx(separatorStyle?.size),
-      '--fcc-separator-color': separatorStyle?.color,
+      '--fcc-separator-color': showSeparators ? separatorStyle?.color : 'transparent',
       ...style
     };
 
@@ -87,7 +88,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
       digitBlockStyle.color = undefined;
     }
     return s;
-  }, [style, digitBlockStyle, labelStyle, duration, dividerStyle, separatorStyle]);
+  }, [style, digitBlockStyle, labelStyle, duration, dividerStyle, separatorStyle, showSeparators]);
 
   const renderProps = React.useMemo<FlipClockCountdownRenderProps | undefined>(() => {
     if (state === undefined) return undefined;
@@ -145,7 +146,8 @@ FlipClockCountdown.defaultProps = {
   onComplete: () => {},
   onTick: () => {},
   labels: ['Days', 'Hours', 'Minutes', 'Seconds'],
-  showLabels: true
+  showLabels: true,
+  showSeparators: true
 };
 
 export default FlipClockCountdown;

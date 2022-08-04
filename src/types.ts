@@ -62,6 +62,12 @@ export interface FlipClockCountdownProps
    */
   readonly showLabels: boolean;
   /**
+   * Set it to `false` if you don't want to show the separators (colon) between time unit.
+   *
+   * @default true
+   */
+  readonly showSeparators: boolean;
+  /**
    * The style will be applied to labels like `font-size`, `color`, etc.
    */
   labelStyle?: React.CSSProperties;

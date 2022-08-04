@@ -137,3 +137,14 @@ test('should render the countdown with no labels', () => {
   expect(() => screen.getByText('Minutes')).toThrowError();
   expect(() => screen.getByText('Seconds')).toThrowError();
 });
+
+test('should render the countdown with no separators', () => {
+  render(<FlipClockCountdown to={new Date().getTime() + 24 * 3600 * 1000 + 5000} showSeparators={false} />);
+  expect(screen.getByTestId('fcc-container')).toHaveStyle('--fcc-separator-color: transparent');
+});
+
+test('should render the countdown with separators', () => {
+  render(<FlipClockCountdown to={new Date().getTime() + 24 * 3600 * 1000 + 5000} showSeparators={true} />);
+  const container = screen.getByTestId('fcc-container');
+  expect(container).not.toHaveStyle('--fcc-separator-color: transparent');
+});
