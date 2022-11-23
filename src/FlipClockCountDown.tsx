@@ -141,7 +141,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
                 <FlipClockDigit key={cIdx} current={cItem} next={item.next[cIdx]} style={_digitBlockStyle} />
               ))}
             </div>
-            {idx < 3 && <div className={styles.fcc__colon}></div>}
+            {idx < 3 && showSeparators && <div className={styles.fcc__colon}></div>}
           </React.Fragment>
         );
       })}
