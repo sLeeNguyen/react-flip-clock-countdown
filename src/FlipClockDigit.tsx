@@ -10,7 +10,10 @@ export interface FlipClockDigitProps {
   style?: FlipClockCountdownProps['digitBlockStyle'];
 }
 
-type FlipClockDigitState = FlipClockDigitProps;
+type FlipClockDigitState = {
+  current: Digit;
+  next: Digit;
+};
 
 export default function FlipClockDigit(props: FlipClockDigitProps) {
   const { current, next, className, style } = props;

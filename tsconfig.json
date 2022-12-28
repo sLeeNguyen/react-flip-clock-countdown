@@ -27,5 +27,5 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "dist", "examples", "resources"]
+  "exclude": ["node_modules", "dist", "examples", "resources", "src/utils.ts", "**/*.spec.tsx", "**/*.spec.ts"]
 }

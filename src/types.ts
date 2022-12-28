@@ -50,11 +50,19 @@ export interface FlipClockCountdownProps
    */
   readonly onTick: FlipClockCountdownTimeDeltaFn;
   /**
-   * An array of labels used to display below each section (day, hour, minute, second).
+   * Each element represents the render state of each section (day, hour, minute, second).
+   *
+   * If `true` section will be rendered, `false` otherwise.
+   *
+   * @default [true, true, true, true]
+   */
+  readonly renderMap: [boolean, boolean, boolean, boolean];
+  /**
+   * An array of labels used to represent information for each section (day, hour, minute, second).
    *
    * @default ['Days', 'Hours', 'Minutes', 'Seconds']
    */
-  readonly labels: string[];
+  readonly labels: [string, string, string, string];
   /**
    * Set it to `false` if you don't want to show the labels.
    *
@@ -95,8 +103,4 @@ export interface FlipClockCountdownProps
    * @default 0.7
    */
   duration?: number;
-}
-
-export interface FlipClockCountdownRenderProps extends FlipClockCountdownTimeDelta {
-  readonly formatted: FlipClockCountdownTimeDeltaFormatted;
 }

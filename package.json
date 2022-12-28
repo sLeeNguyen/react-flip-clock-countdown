@@ -24,8 +24,8 @@
     "react-component"
   ],
   "scripts": {
-    "build": "microbundle-crl --no-compress --format modern,cjs",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "build": "microbundle-crl --raw --no-generateTypes --format modern,cjs",
+    "start": "microbundle-crl watch --raw --no-generateTypes --format modern,cjs",
     "prepare": "run-s build && husky install",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
