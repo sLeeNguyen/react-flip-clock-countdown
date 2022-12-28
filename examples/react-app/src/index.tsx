@@ -1,3 +1,4 @@
+import 'react-flip-clock-countdown/dist/index.css';
 import './index.css';
 
 import React from 'react';

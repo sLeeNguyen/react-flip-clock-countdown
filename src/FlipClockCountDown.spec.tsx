@@ -99,6 +99,7 @@ test('should render the countdown with default labels', () => {
   expect(screen.getByText('Seconds')).toBeInTheDocument();
 
   cleanup();
+  // @ts-ignore
   render(<FlipClockCountdown to={new Date().getTime() + 24 * 3600 * 1000 + 5000} labels={['D', 'H', 'S']} />);
   expect(() => screen.getByText('D')).toThrowError();
   expect(() => screen.getByText('H')).toThrowError();
@@ -121,6 +122,7 @@ test('should render the countdown with custom labels', () => {
 
   cleanup();
   render(
+    // @ts-ignore
     <FlipClockCountdown to={new Date().getTime() + 24 * 3600 * 1000 + 5000} labels={['D', 'H', 'M', 'S', 'MS']} />
   );
   expect(screen.getByText('D')).toBeInTheDocument();
@@ -147,4 +149,37 @@ test('should render the countdown with separators', () => {
   render(<FlipClockCountdown to={new Date().getTime() + 24 * 3600 * 1000 + 5000} showSeparators={true} />);
   const container = screen.getByTestId('fcc-container');
   expect(container).not.toHaveStyle('--fcc-separator-color: transparent');
+});
+
+test('show/hide section works', () => {
+  render(
+    <FlipClockCountdown to={new Date().getTime() + 24 * 3600 * 1000 + 5000} renderMap={[false, true, true, true]} />
+  );
+  const container = screen.getByTestId('fcc-container');
+  expect(container.children.length).toEqual(3 + 2); // 3 rendered sections and 2 separators
+  expect(() => screen.getByText('Days')).toThrowError();
+  expect(screen.getByText('Hours')).toBeInTheDocument();
+  expect(screen.getByText('Minutes')).toBeInTheDocument();
+  expect(screen.getByText('Seconds')).toBeInTheDocument();
+
+  // renderMap reset to default [true, true, true, true]
+  cleanup();
+  // @ts-ignore
+  render(<FlipClockCountdown to={new Date().getTime() + 24 * 3600 * 1000 + 5000} renderMap={[false, true, true]} />);
+  const container2 = screen.getByTestId('fcc-container');
+  expect(container2.children.length).toEqual(4 + 3);
+  expect(screen.getByText('Days')).toBeInTheDocument();
+
+  cleanup();
+  render(
+    <FlipClockCountdown
+      to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
+      // @ts-ignore
+      renderMap={[false, true, false, true, true]}
+    />
+  );
+  const container3 = screen.getByTestId('fcc-container');
+  expect(container3.children.length).toEqual(2 + 1);
+  expect(() => screen.getByText('Days')).toThrowError();
+  expect(() => screen.getByText('Minutes')).toThrowError();
 });
