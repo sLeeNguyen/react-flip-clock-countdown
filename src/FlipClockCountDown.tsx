@@ -6,6 +6,9 @@ import FlipClockDigit from './FlipClockDigit';
 import { FlipClockCountdownProps, FlipClockCountdownState, FlipClockCountdownUnitTimeFormatted } from './types';
 import { calcTimeDelta, convertToPx, parseTimeDelta } from './utils';
 
+const defaultRenderMap = [true, true, true, true];
+const defaultLabels = ['Days', 'Hours', 'Minutes', 'Seconds'];
+
 /**
  * A 3D animated flip clock countdown component for React.
  */
@@ -15,23 +18,24 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     className,
     style,
     children,
-    onComplete,
-    onTick,
-    showLabels,
-    showSeparators,
-    labels,
+    onComplete = () => {},
+    onTick = () => {},
+    showLabels = true,
+    showSeparators = true,
+    labels = defaultLabels,
     labelStyle,
     digitBlockStyle,
     separatorStyle,
     dividerStyle,
-    duration,
-    renderMap,
+    duration = 0.7,
+    renderMap = defaultRenderMap,
     ...other
   } = props;
   // we don't immediately construct the initial state here because it might
   // lead to some bugs with server-side rendering and hydration.
   const [state, setState] = React.useState<FlipClockCountdownState>();
   const countdownRef = React.useRef(0);
+
   function clearTimer() {
     window.clearInterval(countdownRef.current);
   }
@@ -55,7 +59,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
   }
 
   React.useEffect(() => {
-    setState(constructState());
+    // setState(constructState());
     clearTimer();
     countdownRef.current = window.setInterval(tick, 1000);
 
@@ -64,7 +68,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
 
   const containerStyles = React.useMemo<React.CSSProperties>(() => {
     const s = {
-      '--fcc-flip-duration': duration === undefined || duration < 0 || duration > 1 ? undefined : `${duration}s`,
+      '--fcc-flip-duration': `${duration}s`,
       '--fcc-digit-block-width': convertToPx(digitBlockStyle?.width),
       '--fcc-digit-block-height': convertToPx(digitBlockStyle?.height),
       '--fcc-shadow': digitBlockStyle?.boxShadow,
@@ -102,8 +106,8 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
   const sections = React.useMemo(() => {
     if (state === undefined) return undefined;
     const formatted = parseTimeDelta(state.timeDelta);
-    const _renderMap = renderMap.length >= 4 ? renderMap.slice(0, 4) : [true, true, true, true];
-    const _labels = labels.length >= 4 ? labels.slice(0, 4) : ['Days', 'Hours', 'Minutes', 'Seconds'];
+    const _renderMap = renderMap.length >= 4 ? renderMap.slice(0, 4) : defaultRenderMap;
+    const _labels = labels.length >= 4 ? labels.slice(0, 4) : defaultLabels;
     const times = Object.values(formatted) as FlipClockCountdownUnitTimeFormatted[];
     const r: [FlipClockCountdownUnitTimeFormatted, string][] = [];
     _renderMap.forEach((show, i) => {
@@ -153,14 +157,5 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     </div>
   );
 }
-
-FlipClockCountdown.defaultProps = {
-  onComplete: () => {},
-  onTick: () => {},
-  labels: ['Days', 'Hours', 'Minutes', 'Seconds'],
-  renderMap: [true, true, true, true],
-  showLabels: true,
-  showSeparators: true
-};
 
 export default FlipClockCountdown;

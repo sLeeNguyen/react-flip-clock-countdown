@@ -6,7 +6,7 @@
   "author": "leenguyen",
   "license": "MIT",
   "dependencies": {
-    "next": "^12.2.3",
+    "next": ">=12",
     "react": "file:../../node_modules/react",
     "react-dom": "file:../../node_modules/react-dom",
     "react-flip-clock-countdown": "file:../.."

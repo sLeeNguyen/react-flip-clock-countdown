@@ -41,14 +41,14 @@ export interface FlipClockCountdownProps
   /**
    * A callback will be called when countdown completed.
    */
-  readonly onComplete: () => void;
+  readonly onComplete?: () => void;
   /**
    * A callback will be called every second.
    *
    * @param timeDelta
    * @param completed represents the state of the countdown. `true` if the countdown ended, otherwise `false`.
    */
-  readonly onTick: FlipClockCountdownTimeDeltaFn;
+  readonly onTick?: FlipClockCountdownTimeDeltaFn;
   /**
    * Each element represents the render state of each section (day, hour, minute, second).
    *
@@ -56,25 +56,25 @@ export interface FlipClockCountdownProps
    *
    * @default [true, true, true, true]
    */
-  readonly renderMap: [boolean, boolean, boolean, boolean];
+  readonly renderMap?: [boolean, boolean, boolean, boolean];
   /**
    * An array of labels used to represent information for each section (day, hour, minute, second).
    *
    * @default ['Days', 'Hours', 'Minutes', 'Seconds']
    */
-  readonly labels: [string, string, string, string];
+  readonly labels?: [string, string, string, string];
   /**
    * Set it to `false` if you don't want to show the labels.
    *
    * @default true
    */
-  readonly showLabels: boolean;
+  readonly showLabels?: boolean;
   /**
    * Set it to `false` if you don't want to show the separators (colon) between time unit.
    *
    * @default true
    */
-  readonly showSeparators: boolean;
+  readonly showSeparators?: boolean;
   /**
    * The style will be applied to labels like `font-size`, `color`, etc.
    */
