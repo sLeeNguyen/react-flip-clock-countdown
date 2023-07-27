@@ -31,9 +31,8 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     renderMap = defaultRenderMap,
     ...other
   } = props;
-  // we don't immediately construct the initial state here because it might
-  // lead to some bugs with server-side rendering and hydration.
-  const [state, setState] = React.useState<FlipClockCountdownState>();
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
+  const [state, setState] = React.useState<FlipClockCountdownState>(constructState);
   const countdownRef = React.useRef(0);
 
   function clearTimer() {
@@ -104,7 +103,6 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
   }, [digitBlockStyle]);
 
   const sections = React.useMemo(() => {
-    if (state === undefined) return undefined;
     const formatted = parseTimeDelta(state.timeDelta);
     const _renderMap = renderMap.length >= 4 ? renderMap.slice(0, 4) : defaultRenderMap;
     const _labels = labels.length >= 4 ? labels.slice(0, 4) : defaultLabels;
@@ -117,8 +115,6 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     });
     return r;
   }, [renderMap, state]);
-
-  if (state === undefined || sections === undefined) return <React.Fragment></React.Fragment>;
 
   if (state?.completed) {
     return <React.Fragment>{children}</React.Fragment>;
