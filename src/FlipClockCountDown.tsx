@@ -116,7 +116,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     return r;
   }, [renderMap, state]);
 
-  if (state?.completed) {
+  if (state?.completed && children) {
     return <React.Fragment>{children}</React.Fragment>;
   }
 

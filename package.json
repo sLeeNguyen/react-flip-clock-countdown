@@ -48,7 +48,8 @@
     ]
   },
   "dependencies": {
-    "clsx": "^1.1.1"
+    "clsx": "^1.1.1",
+    "postcss-preset-env": "^9.3.0"
   },
   "peerDependencies": {
     "react": ">= 16.13.0"
