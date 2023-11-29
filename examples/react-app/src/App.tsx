@@ -12,7 +12,7 @@ const App = () => {
       </div>
       <div style={{ marginBottom: 30 }}>
         <h1>Default without completion component</h1>
-        <FlipClockCountdown showLabels={false} to={new Date().getTime() + 1000 * 3} />
+        <FlipClockCountdown hideOnComplete={false} showLabels={false} to={new Date().getTime() + 1000 * 3} />
       </div>
       <div style={{ marginBottom: 30 }}>
         <h2>Custom styles</h2>

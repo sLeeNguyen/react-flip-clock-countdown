@@ -32,6 +32,12 @@ export type FlipClockCountdownTimeDeltaFn = (props: FlipClockCountdownState) => 
 export interface FlipClockCountdownProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   readonly to: Date | number | string;
+
+  /**
+   * By befault, the countdown will be hidden when it completed (or show children if provided).
+   * This will keep the timer in place and stuck at zeros when the countdown is completed.
+   */
+  hideOnComplete?: boolean;
   /**
    * @deprecated
    * Props to be passed to div element that is container for all elements.
