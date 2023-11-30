@@ -86,7 +86,8 @@
     "react": ">= 16.13.0",
     "react-dom": ">= 16.13.0",
     "react-scripts": "^3.4.1 || >= 4.0.3",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "postcss-preset-env": "^9.3.0"
   },
   "files": [
     "dist",

@@ -29,6 +29,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     dividerStyle,
     duration = 0.7,
     renderMap = defaultRenderMap,
+    hideOnComplete = true,
     ...other
   } = props;
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -116,7 +117,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     return r;
   }, [renderMap, state]);
 
-  if (state?.completed) {
+  if (state?.completed && hideOnComplete) {
     return <React.Fragment>{children}</React.Fragment>;
   }
 

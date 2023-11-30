@@ -46,6 +46,11 @@ test('should instant render the completed component (children)', () => {
   expect(container.textContent).toBe('Completed');
 });
 
+test('should not render completed component if no children set and hideOnComplete is false', () => {
+  render(<FlipClockCountdown hideOnComplete={false} to={new Date().getTime() - 5000} />);
+  screen.getByTestId('fcc-container');
+});
+
 test('should render the countdown and when the countdown is complete, completed component will be rendered', async () => {
   render(
     <FlipClockCountdown to={new Date().getTime() + 5000}>
