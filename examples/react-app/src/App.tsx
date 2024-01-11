@@ -1,14 +1,31 @@
-import React from 'react';
-
+import React, { useRef } from 'react';
 import FlipClockCountdown from 'react-flip-clock-countdown';
 
 const App = () => {
+  const flipRef = useRef<any>(null);
+
+  const run = () => {
+    flipRef.current?.run();
+  };
+
+  const stop = () => {
+    flipRef.current?.stop();
+  };
+
   return (
     <React.Fragment>
       <h1>React flip-clock countdown</h1>
       <div style={{ marginBottom: 30 }}>
         <h2>Default</h2>
         <FlipClockCountdown to={new Date().getTime() + 24 * 3600 * 1000 + 5000}>Finished</FlipClockCountdown>
+      </div>
+      <div style={{ marginBottom: 30 }}>
+        <h2>Control</h2>
+        <FlipClockCountdown controls ref={flipRef} to={new Date().getTime() + 24 * 3600 * 1000 + 5000}>
+          Finished
+        </FlipClockCountdown>
+        <button onClick={run}>Run</button>
+        <button onClick={stop}>Stop</button>
       </div>
       <div style={{ marginBottom: 30 }}>
         <h1>Default without completion component</h1>
