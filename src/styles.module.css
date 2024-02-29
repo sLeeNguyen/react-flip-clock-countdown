@@ -1,4 +1,4 @@
-.fcc__container {
+:root {
   --fcc-flip-duration: 0.7s;
   --fcc-digit-block-width: 46px;
   --fcc-digit-block-height: 80px;
@@ -144,7 +144,7 @@
 
 .fcc__colon::before,
 .fcc__colon::after {
-  content: "";
+  content: '';
   width: var(--fcc-separator-size);
   height: var(--fcc-separator-size);
   border-radius: 50%;
