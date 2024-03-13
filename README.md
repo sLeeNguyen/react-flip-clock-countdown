@@ -40,6 +40,7 @@ The <code>FlipClockCountdown</code> has all properties of `div` and additional p
 | **dividerStyle**                          |            <code>object</code>            |    no    |                <code>undefined</code>                | The style will be applied to divider, includes `color` and `height`.                                                                                                             |
 | **duration**                              |            <code>number</code>            |    no    |                   <code>0.7</code>                   | Duration (in second) when flip card. Valid value in range (0, 1).                                                                                                                |
 | **hideOnComplete**                        |           <code>boolean</code>            |    no    |                  <code>true</code>                   | By befault, the countdown will be hidden when it completed (or show children if provided). This will keep the timer in place and stuck at zeros when the countdown is completed. |
+| **controls**                              |           <code>boolean</code>            |    no    |                  <code>false</code>                  | Set it to true if you went to control the countdown.                                                                                                                             |
 
 ### `to`
 
@@ -95,6 +96,35 @@ class Example extends Component {
     return <FlipClockCountdown to={new Date().getTime() + 24 * 3600 * 1000 + 5000} />;
   }
 }
+```
+
+### Controlled usage
+
+```tsx
+import React, { useRef } from 'react';
+
+import FlipClockCountdown from '@leenguyen/react-flip-clock-countdown';
+import '@leenguyen/react-flip-clock-countdown/dist/index.css';
+
+const App = () => {
+  const flipRef = useRef<any>(null);
+
+  const run = () => {
+    flipRef.current?.run();
+  };
+
+  const stop = () => {
+    flipRef.current?.stop();
+  };
+
+  return (
+    <div>
+      <FlipClockCountdown controls ref={flipRef} to={new Date().getTime() + 24 * 3600 * 1000 + 5000} />
+      <button onClick={run}>Run</button>
+      <button onClick={stop}>Stop</button>
+    </div>
+  );
+};
 ```
 
 ### Render a React Component when countdown is complete
