@@ -17,7 +17,7 @@ const Example = () => {
             to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
             labels={['DAYS', 'HOURS', 'MINUTES', 'SECONDS']}
             labelStyle={{ fontSize: 10, fontWeight: 500, textTransform: 'uppercase' }}
-            digitBlockStyle={{ width: 40, height: 60, fontSize: 30 }}
+            digitBlockStyle={{ width: 40, height: 60, fontSize: 30, borderRadius: 10 }}
             dividerStyle={{ color: 'red', height: 1 }}
             separatorStyle={{ color: 'red', size: '6px' }}
             duration={0.5}
