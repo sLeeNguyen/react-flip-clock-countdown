@@ -27,6 +27,11 @@ export interface FlipClockCountdownState {
   readonly completed: boolean;
 }
 
+export interface FlipClockRefType {
+  readonly run: () => void;
+  readonly stop: () => void;
+}
+
 export type FlipClockCountdownTimeDeltaFn = (props: FlipClockCountdownState) => void;
 
 export interface FlipClockCountdownProps
@@ -69,6 +74,12 @@ export interface FlipClockCountdownProps
    * @default ['Days', 'Hours', 'Minutes', 'Seconds']
    */
   readonly labels?: [string, string, string, string];
+  /**
+   * Set it to `true` if you want to control the countdown.
+   *
+   * @default false
+   */
+  readonly controls?: boolean;
   /**
    * Set it to `false` if you don't want to show the labels.
    *

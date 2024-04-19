@@ -1,9 +1,13 @@
-import styles from './styles.module.css';
-//
 import clsx from 'clsx';
-import React from 'react';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import FlipClockDigit from './FlipClockDigit';
-import { FlipClockCountdownProps, FlipClockCountdownState, FlipClockCountdownUnitTimeFormatted } from './types';
+import styles from './styles.module.css';
+import {
+  FlipClockCountdownProps,
+  FlipClockCountdownState,
+  FlipClockCountdownUnitTimeFormatted,
+  FlipClockRefType
+} from './types';
 import { calcTimeDelta, convertToPx, parseTimeDelta } from './utils';
 
 const defaultRenderMap = [true, true, true, true];
@@ -12,7 +16,7 @@ const defaultLabels = ['Days', 'Hours', 'Minutes', 'Seconds'];
 /**
  * A 3D animated flip clock countdown component for React.
  */
-function FlipClockCountdown(props: FlipClockCountdownProps) {
+const FlipClockCountdown: React.ForwardRefRenderFunction<FlipClockRefType, FlipClockCountdownProps> = (props, ref) => {
   const {
     to,
     className,
@@ -20,6 +24,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     children,
     onComplete = () => {},
     onTick = () => {},
+    controls = false,
     showLabels = true,
     showSeparators = true,
     labels = defaultLabels,
@@ -32,6 +37,8 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     hideOnComplete = true,
     ...other
   } = props;
+  const [end, setEnd] = React.useState<string | number | Date>(to);
+  const [status, setStatus] = React.useState<'running' | 'stopped'>(controls ? 'stopped' : 'running');
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
   const [state, setState] = React.useState<FlipClockCountdownState>(constructState);
   const countdownRef = React.useRef(0);
@@ -41,7 +48,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
   }
 
   function constructState(): FlipClockCountdownState {
-    const timeDelta = calcTimeDelta(to);
+    const timeDelta = calcTimeDelta(end);
     return {
       timeDelta,
       completed: timeDelta.total === 0
@@ -58,12 +65,36 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     }
   }
 
-  React.useEffect(() => {
-    // setState(constructState());
-    clearTimer();
-    countdownRef.current = window.setInterval(tick, 1000);
+  function stop() {
+    if (controls) {
+      setStatus('stopped');
+      clearTimer();
+    }
+  }
 
+  function run() {
+    if (controls && status === 'stopped') {
+      setEnd(state.timeDelta.total * 1000 + new Date().getTime());
+      setStatus('running');
+    }
+  }
+
+  useImperativeHandle(ref, () => ({ stop, run }), [state, status]);
+
+  React.useEffect(() => {
+    clearTimer();
+    if ((controls && status === 'running') || !controls) {
+      countdownRef.current = window.setInterval(tick, 1000);
+    }
     return () => clearTimer();
+  }, [end]);
+
+  React.useEffect(() => {
+    if (controls) {
+      setStatus('stopped');
+    }
+    setEnd(to);
+    setTimeout(() => tick(), 0);
   }, [to]);
 
   const containerStyles = React.useMemo<React.CSSProperties>(() => {
@@ -153,6 +184,6 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
       })}
     </div>
   );
-}
+};
 
-export default FlipClockCountdown;
+export default forwardRef(FlipClockCountdown);
