@@ -34,7 +34,7 @@ export interface FlipClockCountdownProps
   readonly to: Date | number | string;
 
   /**
-   * By befault, the countdown will be hidden when it completed (or show children if provided).
+   * By default, the countdown will be hidden when it completed (or show children if provided).
    * This will keep the timer in place and stuck at zeros when the countdown is completed.
    */
   hideOnComplete?: boolean;
@@ -109,4 +109,12 @@ export interface FlipClockCountdownProps
    * @default 0.7
    */
   duration?: number;
+  /**
+   * Whether or not to stop the clock when the visibilityState is hidden,
+   * enabling this feature will prevent the component gets derailed if we
+   * switch between browser tabs.
+   *
+   * @default false
+   */
+  stopOnHiddenVisibility?: boolean;
 }

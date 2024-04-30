@@ -39,7 +39,8 @@ The <code>FlipClockCountdown</code> has all properties of `div` and additional p
 | **separatorStyle**                        |            <code>object</code>            |    no    |                <code>undefined</code>                | The styles apply to separator (colon), includes `size` and `color`.                                                                                                              |
 | **dividerStyle**                          |            <code>object</code>            |    no    |                <code>undefined</code>                | The style will be applied to divider, includes `color` and `height`.                                                                                                             |
 | **duration**                              |            <code>number</code>            |    no    |                   <code>0.7</code>                   | Duration (in second) when flip card. Valid value in range (0, 1).                                                                                                                |
-| **hideOnComplete**                        |           <code>boolean</code>            |    no    |                  <code>true</code>                   | By befault, the countdown will be hidden when it completed (or show children if provided). This will keep the timer in place and stuck at zeros when the countdown is completed. |
+| **hideOnComplete**                        |           <code>boolean</code>            |    no    |                  <code>true</code>                   | By default, the countdown will be hidden when it completed (or show children if provided). This will keep the timer in place and stuck at zeros when the countdown is completed. |
+| **stopOnHiddenVisibility**                |           <code>boolean</code>            |    no    |                  <code>false</code>                  | Whether or not to stop the clock when the visibilityState is hidden, enabling this feature will prevent the component gets derailed if we switch between browser tabs.           |
 
 ### `to`
 
@@ -193,6 +194,7 @@ class Example extends Component {
   --fcc-flip-duration: 0.5s; /* transition duration when flip card */
   --fcc-digit-block-width: 40px; /* width of digit card */
   --fcc-digit-block-height: 60px; /* height of digit card, highly recommend in even number */
+  --fcc-digit-block-radius: 5px; /* border radius of digit card */
   --fcc-digit-font-size: 30px; /* font size of digit */
   --fcc-digit-color: white; /* color of digit */
   --fcc-label-font-size: 10px; /* font size of label */

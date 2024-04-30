@@ -37,7 +37,7 @@ export default function FlipClockDigit(props: FlipClockDigitProps) {
   };
 
   return (
-    <div className={clsx(styles.fcc__digit_block, className)} style={style}>
+    <div className={clsx('fcc-digit-block', styles.fcc__digit_block, className)} style={style}>
       <div className={styles.fcc__next_above}>{digit.next}</div>
       <div className={styles.fcc__current_below}>{digit.current}</div>
       <div className={clsx(styles.fcc__card, { [styles.fcc__flipped]: flipped })} onTransitionEnd={handleTransitionEnd}>

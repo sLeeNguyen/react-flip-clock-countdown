@@ -30,6 +30,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     duration = 0.7,
     renderMap = defaultRenderMap,
     hideOnComplete = true,
+    stopOnHiddenVisibility = false,
     ...other
   } = props;
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -59,18 +60,37 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
   }
 
   React.useEffect(() => {
-    // setState(constructState());
-    clearTimer();
-    countdownRef.current = window.setInterval(tick, 1000);
-
-    return () => clearTimer();
-  }, [to]);
+    if (stopOnHiddenVisibility) {
+      const visibilityChangeHandler = () => {
+        if (document.visibilityState === 'visible') {
+          tick();
+          countdownRef.current = window.setInterval(tick, 1000);
+        } else {
+          clearTimer();
+        }
+      };
+      visibilityChangeHandler();
+      document.addEventListener('visibilitychange', visibilityChangeHandler);
+      return () => {
+        clearTimer();
+        document.removeEventListener('visibilitychange', visibilityChangeHandler);
+      };
+    } else {
+      clearTimer();
+      tick();
+      countdownRef.current = window.setInterval(tick, 1000);
+      return () => {
+        clearTimer();
+      };
+    }
+  }, [to, stopOnHiddenVisibility]);
 
   const containerStyles = React.useMemo<React.CSSProperties>(() => {
     const s = {
       '--fcc-flip-duration': `${duration}s`,
       '--fcc-digit-block-width': convertToPx(digitBlockStyle?.width),
       '--fcc-digit-block-height': convertToPx(digitBlockStyle?.height),
+      '--fcc-digit-block-radius': convertToPx(digitBlockStyle?.borderRadius),
       '--fcc-shadow': digitBlockStyle?.boxShadow,
       '--fcc-digit-font-size': convertToPx(digitBlockStyle?.fontSize),
       '--fcc-digit-color': digitBlockStyle?.color,
@@ -97,7 +117,8 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
         height: undefined,
         boxShadow: undefined,
         fontSize: undefined,
-        color: undefined
+        color: undefined,
+        borderRadius: undefined
       };
     }
     return undefined;
@@ -125,6 +146,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     <div
       {...other}
       className={clsx(
+        'fcc-container',
         styles.fcc__container,
         {
           [styles.fcc__label_show]: showLabels
@@ -137,17 +159,17 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
       {sections.map(([item, label], idx) => {
         return (
           <React.Fragment key={`digit-block-${idx}`}>
-            <div className={styles.fcc__digit_block_container}>
-              {showLabels && (
-                <div className={styles.fcc__digit_block_label} style={labelStyle}>
-                  {label}
-                </div>
-              )}
+            <div className={`fcc-digit-block-container ${styles.fcc__digit_block_container}`}>
               {item.current.map((cItem, cIdx) => (
                 <FlipClockDigit key={cIdx} current={cItem} next={item.next[cIdx]} style={_digitBlockStyle} />
               ))}
+              {showLabels && (
+                <div className={`fcc-label ${styles.fcc__digit_block_label}`} style={labelStyle}>
+                  {label}
+                </div>
+              )}
             </div>
-            {idx < sections.length - 1 && <div className={styles.fcc__colon}></div>}
+            {idx < sections.length - 1 && <div className={`fcc-separator ${styles.fcc__colon}`}></div>}
           </React.Fragment>
         );
       })}

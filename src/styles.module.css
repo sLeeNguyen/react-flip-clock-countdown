@@ -2,24 +2,21 @@
   --fcc-flip-duration: 0.7s;
   --fcc-digit-block-width: 46px;
   --fcc-digit-block-height: 80px;
+  --fcc-digit-block-radius: 4px;
   --fcc-digit-font-size: 50px;
   --fcc-label-font-size: 16px;
-  --fcc-label-color: #ffffff;
+  --fcc-label-color: inherit;
   --fcc-background: #0f181a;
   --fcc-digit-color: #ffffff;
   --fcc-divider-color: #ffffff66;
   --fcc-divider-height: 1px;
   --fcc-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   --fcc-separator-size: 5px;
-  --fcc-separator-color: var(--fcc-digit-color);
+  --fcc-separator-color: currentColor;
 }
 
 .fcc__container {
   font-family: inherit;
-  font-size: var(--fcc-digit-font-size);
-  color: var(--fcc-digit-color);
-  line-height: 0;
-  font-weight: 500;
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
@@ -56,10 +53,14 @@
 .fcc__digit_block {
   perspective: 200px;
   position: relative;
+  font-size: var(--fcc-digit-font-size);
+  color: var(--fcc-digit-color);
+  font-weight: 500;
+  line-height: 0;
   width: var(--fcc-digit-block-width);
   height: var(--fcc-digit-block-height);
   box-shadow: var(--fcc-shadow);
-  border-radius: 4px;
+  border-radius: var(--fcc-digit-block-radius);
 }
 
 .fcc__current_below,

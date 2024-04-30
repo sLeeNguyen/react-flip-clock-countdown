@@ -58,7 +58,7 @@ test('should not render completed component if no children set and hideOnComplet
   expect(screen.getByTestId('fcc-container')).toBeInTheDocument();
 });
 
-test('should render the countdown and when the countdown is complete, completed component will be rendered', async () => {
+test('should render the countdown and completed component when the countdown is completed', async () => {
   render(
     <FlipClockCountdown to={new Date().getTime() + 5000}>
       <div>Completed</div>
@@ -78,7 +78,7 @@ test('should render the countdown with custom styles', () => {
     <FlipClockCountdown
       to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
       labelStyle={{ fontSize: 10, fontWeight: 500, textTransform: 'uppercase' }}
-      digitBlockStyle={{ width: 40, height: '60px', fontSize: 30, color: 'red' }}
+      digitBlockStyle={{ width: 40, height: '60px', fontSize: 30, color: 'red', borderRadius: '5px' }}
       dividerStyle={{ color: 'red', height: 1 }}
       separatorStyle={{ color: 'red', size: 6 }}
       duration={0.5}
@@ -89,6 +89,7 @@ test('should render the countdown with custom styles', () => {
   expect(container).toHaveStyle('--fcc-flip-duration: 0.5s');
   expect(container).toHaveStyle('--fcc-digit-block-width: 40px');
   expect(container).toHaveStyle('--fcc-digit-block-height: 60px');
+  expect(container).toHaveStyle('--fcc-digit-block-radius: 5px');
   expect(container).toHaveStyle('--fcc-digit-font-size: 30px');
   expect(container).toHaveStyle('--fcc-digit-color: red');
   expect(container).toHaveStyle('--fcc-divider-color: red');
