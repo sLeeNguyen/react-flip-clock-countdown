@@ -1,8 +1,10 @@
 :root {
   --fcc-flip-duration: 0.7s;
+  --fcc-spacing: 8px;
   --fcc-digit-block-width: 46px;
   --fcc-digit-block-height: 80px;
   --fcc-digit-block-radius: 4px;
+  --fcc-digit-block-spacing: 4px;
   --fcc-digit-font-size: 50px;
   --fcc-label-font-size: 16px;
   --fcc-label-color: inherit;
@@ -23,6 +25,7 @@
   cursor: default;
   display: flex;
   align-items: center;
+  gap: var(--fcc-spacing);
 }
 
 .fcc__label_show .fcc__digit_block_container {
@@ -30,7 +33,7 @@
 }
 
 .fcc__digit_block_container .fcc__digit_block:not(:last-child) {
-  margin-right: 4px;
+  margin-right: var(--fcc-digit-block-spacing);
 }
 
 .fcc__digit_block_container {
@@ -131,8 +134,6 @@
 }
 
 .fcc__colon {
-  margin-left: 8px;
-  margin-right: 8px;
   height: var(--fcc-digit-block-height);
   display: flex;
   flex-direction: column;

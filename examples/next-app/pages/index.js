@@ -8,7 +8,16 @@ const Example = () => {
       <h1>React flip-clock countdown</h1>
       <div style={{ marginBottom: 30 }}>
         <h2>Default</h2>
-        <FlipClockCountdown to={new Date().getTime() + 24 * 3600 * 1000 + 5000}>Finished</FlipClockCountdown>
+        <FlipClockCountdown
+          to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
+          stopOnHiddenVisibility
+          spacing={{
+            clock: 16,
+            digitBlock: 4
+          }}
+        >
+          Finished
+        </FlipClockCountdown>
       </div>
       <div style={{ marginBottom: 30 }}>
         <h2>Custom styles</h2>

@@ -117,4 +117,17 @@ export interface FlipClockCountdownProps
    * @default false
    */
   stopOnHiddenVisibility?: boolean;
+  /**
+   * Custom clock spacing.
+   */
+  spacing?: {
+    /**
+     * Space between unit times and divider.
+     */
+    clock?: number | string;
+    /**
+     * Space between blocks in each unit of time.
+     */
+    digitBlock?: number | string;
+  };
 }

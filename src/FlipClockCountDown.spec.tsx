@@ -82,14 +82,17 @@ test('should render the countdown with custom styles', () => {
       dividerStyle={{ color: 'red', height: 1 }}
       separatorStyle={{ color: 'red', size: 6 }}
       duration={0.5}
+      spacing={{ clock: '10px', digitBlock: 6 }}
     />
   );
   const container = screen.getByTestId('fcc-container');
   expect(container).toBeInTheDocument();
+  expect(container).toHaveStyle('--fcc-spacing: 10px');
   expect(container).toHaveStyle('--fcc-flip-duration: 0.5s');
   expect(container).toHaveStyle('--fcc-digit-block-width: 40px');
   expect(container).toHaveStyle('--fcc-digit-block-height: 60px');
   expect(container).toHaveStyle('--fcc-digit-block-radius: 5px');
+  expect(container).toHaveStyle('--fcc-digit-block-spacing: 6px');
   expect(container).toHaveStyle('--fcc-digit-font-size: 30px');
   expect(container).toHaveStyle('--fcc-digit-color: red');
   expect(container).toHaveStyle('--fcc-divider-color: red');

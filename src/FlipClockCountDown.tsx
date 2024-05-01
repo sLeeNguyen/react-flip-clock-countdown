@@ -31,6 +31,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     renderMap = defaultRenderMap,
     hideOnComplete = true,
     stopOnHiddenVisibility = false,
+    spacing,
     ...other
   } = props;
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -88,9 +89,11 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
   const containerStyles = React.useMemo<React.CSSProperties>(() => {
     const s = {
       '--fcc-flip-duration': `${duration}s`,
+      '--fcc-spacing': convertToPx(spacing?.clock),
       '--fcc-digit-block-width': convertToPx(digitBlockStyle?.width),
       '--fcc-digit-block-height': convertToPx(digitBlockStyle?.height),
       '--fcc-digit-block-radius': convertToPx(digitBlockStyle?.borderRadius),
+      '--fcc-digit-block-spacing': convertToPx(spacing?.digitBlock),
       '--fcc-shadow': digitBlockStyle?.boxShadow,
       '--fcc-digit-font-size': convertToPx(digitBlockStyle?.fontSize),
       '--fcc-digit-color': digitBlockStyle?.color,
@@ -105,7 +108,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     };
 
     return s;
-  }, [style, digitBlockStyle, labelStyle, duration, dividerStyle, separatorStyle, showSeparators]);
+  }, [style, digitBlockStyle, labelStyle, duration, dividerStyle, separatorStyle, showSeparators, spacing]);
 
   const _digitBlockStyle = React.useMemo(() => {
     if (digitBlockStyle) {
