@@ -129,13 +129,10 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     const _renderMap = renderMap.length >= 4 ? renderMap.slice(0, 4) : defaultRenderMap;
     const _labels = labels.length >= 4 ? labels.slice(0, 4) : defaultLabels;
     const times = Object.values(formatted) as FlipClockCountdownUnitTimeFormatted[];
-    const r: [FlipClockCountdownUnitTimeFormatted, string][] = [];
-    _renderMap.forEach((show, i) => {
-      if (show) {
-        r.push([times[i], _labels[i]]);
-      }
+    const keys = ['day', 'hour', 'minute', 'second'];
+    return _renderMap.map<[boolean, string, FlipClockCountdownUnitTimeFormatted, string]>((show, i) => {
+      return [show, keys[i], times[i], _labels[i]];
     });
-    return r;
   }, [renderMap, state]);
 
   if (state?.completed && hideOnComplete) {
@@ -146,7 +143,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     <div
       {...other}
       className={clsx(
-        'fcc-container',
+        'fcc',
         styles.fcc__container,
         {
           [styles.fcc__label_show]: showLabels
@@ -156,20 +153,27 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
       style={containerStyles}
       data-testid='fcc-container'
     >
-      {sections.map(([item, label], idx) => {
+      {sections.map(([render, key, item, label], idx) => {
+        if (!render) return null;
         return (
-          <React.Fragment key={`digit-block-${idx}`}>
-            <div className={`fcc-digit-block-container ${styles.fcc__digit_block_container}`}>
-              {item.current.map((cItem, cIdx) => (
-                <FlipClockDigit key={cIdx} current={cItem} next={item.next[cIdx]} style={_digitBlockStyle} />
-              ))}
+          <React.Fragment key={key}>
+            <div className={`fcc__unit_time fcc__unit_time--${key} ${styles.fcc__digit_block_container}`}>
               {showLabels && (
-                <div className={`fcc-label ${styles.fcc__digit_block_label}`} style={labelStyle}>
+                <div className={`fcc__label fcc__label--${key} ${styles.fcc__digit_block_label}`} style={labelStyle}>
                   {label}
                 </div>
               )}
+              {item.current.map((cItem, cIdx) => (
+                <FlipClockDigit
+                  key={cIdx}
+                  current={cItem}
+                  next={item.next[cIdx]}
+                  style={_digitBlockStyle}
+                  className={`fcc__digit_block--${key}`}
+                />
+              ))}
             </div>
-            {idx < sections.length - 1 && <div className={`fcc-separator ${styles.fcc__colon}`}></div>}
+            {idx < sections.length - 1 && <div className={`fcc__separator ${styles.fcc__colon}`}></div>}
           </React.Fragment>
         );
       })}
