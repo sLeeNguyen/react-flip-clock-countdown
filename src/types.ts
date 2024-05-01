@@ -122,7 +122,7 @@ export interface FlipClockCountdownProps
    */
   spacing?: {
     /**
-     * Space between unit times and divider.
+     * Space between unit times and separators.
      */
     clock?: number | string;
     /**

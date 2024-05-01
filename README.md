@@ -24,62 +24,24 @@ yarn add @leenguyen/react-flip-clock-countdown
 
 The <code>FlipClockCountdown</code> has all properties of `div` and additional props below
 
-| Name                                      |                   Type                    | Required |                       Default                        | Description                                                                                                                                                                      |
-| :---------------------------------------- | :---------------------------------------: | :------: | :--------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [**to**](#to)                             | <code>Date&#124;string&#124;number</code> |   yes    |                                                      | <code>Date</code> or timestamp in the future.                                                                                                                                    |
-| [~~**containerProps**~~](#containerprops) |            <code>object</code>            |    no    |                <code>undefined</code>                | Props apply to the flip clock container. This prop is deprecated, you should apply directly to the <code>FlipClockCountdown</code> component.                                    |
-| [**onComplete**](#oncomplete)             |             <code>func</code>             |    no    |                                                      | Callback when countdown ends<br/> **Signature**:<br/>`function() => void`                                                                                                        |
-| [**onTick**](#ontick)                     |             <code>func</code>             |    no    |                                                      | Callback on every interval tick<br /> **Signature**:<br/>`function({ timeDelta, completed }) => void`                                                                            |
-| **renderMap**                             |       <code>`Array<boolean>`</code>       |    no    |        <code>[true, true, true, true]</code>         | Each element represents the render state of each section (day, hour, minute, second). If `true` section will be rendered, `false` otherwise.                                     |
-| **labels**                                |       <code>`Array<string>`</code>        |    no    | <code>['Days', 'Hours', 'Minutes', 'Seconds']</code> | Custom array of labels used to represent information for each section (day, hour, minute, second).                                                                               |
-| **showLabels**                            |           <code>boolean</code>            |    no    |                  <code>true</code>                   | Set it to `false` if you don't want to show the labels.                                                                                                                          |
-| **showSeparators**                        |           <code>boolean</code>            |    no    |                  <code>true</code>                   | Set it to `false` if you don't want to show the separators (colon) between time unit.                                                                                            |
-| **labelStyle**                            |     <code>React.CSSProperties</code>      |    no    |                <code>undefined</code>                | The styles apply to labels `font-size`, `color`, `width`, `height`, etc.                                                                                                         |
-| **digitBlockStyle**                       |     <code>React.CSSProperties</code>      |    no    |                <code>undefined</code>                | The styles apply to digit blocks like `font-size`, `color`, `width`, `height`, etc.                                                                                              |
-| **separatorStyle**                        |            <code>object</code>            |    no    |                <code>undefined</code>                | The styles apply to separator (colon), includes `size` and `color`.                                                                                                              |
-| **dividerStyle**                          |            <code>object</code>            |    no    |                <code>undefined</code>                | The style will be applied to divider, includes `color` and `height`.                                                                                                             |
-| **duration**                              |            <code>number</code>            |    no    |                   <code>0.7</code>                   | Duration (in second) when flip card. Valid value in range (0, 1).                                                                                                                |
-| **hideOnComplete**                        |           <code>boolean</code>            |    no    |                  <code>true</code>                   | By default, the countdown will be hidden when it completed (or show children if provided). This will keep the timer in place and stuck at zeros when the countdown is completed. |
-| **stopOnHiddenVisibility**                |           <code>boolean</code>            |    no    |                  <code>false</code>                  | Whether or not to stop the clock when the visibilityState is hidden, enabling this feature will prevent the component gets derailed if we switch between browser tabs.           |
-
-### `to`
-
-The `to` prop can be a [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) object, `string`, or timestamp in the future. This date is compared with the current date.
-
-Valid values can be _(and more)_:
-
-- `'2022-02-08T14:27:32.635Z'` // [`Date` time string format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse#Date_Time_String_Format)
-- `1644330452635` // Timestamp in milliseconds
-- `new Date(1644330452635)` // [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) object
-
-### `className`
-
-Class names applied to flip clock container element. Use it to custom flip-clock's styles. See [example](#render-a-countdown-with-custom-styles)
-
-### `containerProps`
-
-All props of `div`
-
-### `children`
-
-This component also considers the child that may live within the `<FlipClockCountdown></FlipClockCountdown>` element, which, in case it's available, replaces the countdown's component state once it's complete. See [example](#render-a-react-component-when-countdown-is-complete).
-
-### `onComplete`
-
-Callback when countdown ends.
-
-`function() => void`
-
-See [example](#render-a-react-component-when-countdown-is-complete).
-
-### `onTick`
-
-Callback on every interval tick.
-
-`function({ timeDelta, completed }) => void`
-
-- `timeDelta: { total: number, days: number, hours: number, minutes: number, seconds: number}` - the remaining time in formatted.
-- `completed: boolean` - countdown's state.
+| Name                       |                   Type                    | Required |                       Default                        | Description                                                                                                                                                                      |
+| :------------------------- | :---------------------------------------: | :------: | :--------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **to**                     | <code>Date&#124;string&#124;number</code> |   yes    |                                                      | <code>Date</code> or timestamp in the future.                                                                                                                                    |
+| ~~**containerProps**~~     |            <code>object</code>            |    no    |                <code>undefined</code>                | Props apply to the flip clock container. This prop is deprecated, you should apply directly to the <code>FlipClockCountdown</code> component.                                    |
+| **onComplete**             |             <code>func</code>             |    no    |                                                      | Callback when countdown ends<br/> **Signature**:<br/>`function() => void`                                                                                                        |
+| **onTick**                 |             <code>func</code>             |    no    |                                                      | Callback on every interval tick<br /> **Signature**:<br/>`function({ timeDelta, completed }) => void`                                                                            |
+| **renderMap**              |       <code>`Array<boolean>`</code>       |    no    |        <code>[true, true, true, true]</code>         | Each element represents the render state of each section (day, hour, minute, second). If `true` section will be rendered, `false` otherwise.                                     |
+| **labels**                 |       <code>`Array<string>`</code>        |    no    | <code>['Days', 'Hours', 'Minutes', 'Seconds']</code> | Custom array of labels used to represent information for each section (day, hour, minute, second).                                                                               |
+| **showLabels**             |           <code>boolean</code>            |    no    |                  <code>true</code>                   | Set it to `false` if you don't want to show the labels.                                                                                                                          |
+| **showSeparators**         |           <code>boolean</code>            |    no    |                  <code>true</code>                   | Set it to `false` if you don't want to show the separators (colon) between time unit.                                                                                            |
+| **labelStyle**             |     <code>React.CSSProperties</code>      |    no    |                <code>undefined</code>                | The styles apply to labels `font-size`, `color`, `width`, `height`, etc.                                                                                                         |
+| **digitBlockStyle**        |     <code>React.CSSProperties</code>      |    no    |                <code>undefined</code>                | The styles apply to digit blocks like `font-size`, `color`, `width`, `height`, etc.                                                                                              |
+| **separatorStyle**         |            <code>object</code>            |    no    |                <code>undefined</code>                | The styles apply to separator (colon), includes `size` and `color`.                                                                                                              |
+| **dividerStyle**           |            <code>object</code>            |    no    |                <code>undefined</code>                | The style will be applied to divider, includes `color` and `height`.                                                                                                             |
+| **duration**               |            <code>number</code>            |    no    |                   <code>0.7</code>                   | Duration (in second) when flip card. Valid value in range (0, 1).                                                                                                                |
+| **hideOnComplete**         |           <code>boolean</code>            |    no    |                  <code>true</code>                   | By default, the countdown will be hidden when it completed (or show children if provided). This will keep the timer in place and stuck at zeros when the countdown is completed. |
+| **stopOnHiddenVisibility** |           <code>boolean</code>            |    no    |                  <code>false</code>                  | Whether or not to stop the clock when the visibilityState is hidden, enabling this feature will prevent the component gets derailed if we switch between browser tabs.           |
+| **spacing**                |            <code>object</code>            |    no    |                <code>undefined</code>                | This prop allows you to modify the clock spacing.                                                                                                                                |
 
 ## Usage
 
@@ -192,9 +154,11 @@ class Example extends Component {
 
 .flip-clock {
   --fcc-flip-duration: 0.5s; /* transition duration when flip card */
+  --fcc-spacing: 8px; /* space between unit times and separators */
   --fcc-digit-block-width: 40px; /* width of digit card */
   --fcc-digit-block-height: 60px; /* height of digit card, highly recommend in even number */
   --fcc-digit-block-radius: 5px; /* border radius of digit card */
+  --fcc-digit-block-spacing: 5px; /* Space between blocks in each unit of time. */
   --fcc-digit-font-size: 30px; /* font size of digit */
   --fcc-digit-color: white; /* color of digit */
   --fcc-label-font-size: 10px; /* font size of label */
