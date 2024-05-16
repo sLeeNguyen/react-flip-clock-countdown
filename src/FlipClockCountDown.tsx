@@ -1,10 +1,10 @@
 import styles from './styles.module.css';
 //
 import clsx from 'clsx';
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import FlipClockDigit from './FlipClockDigit';
 import { FlipClockCountdownProps, FlipClockCountdownState, FlipClockCountdownUnitTimeFormatted } from './types';
-import { calcTimeDelta, convertToPx, parseTimeDelta } from './utils';
+import { calcTimeDelta, convertToPx, isServer, parseTimeDelta } from './utils';
 
 const defaultRenderMap = [true, true, true, true];
 const defaultLabels = ['Days', 'Hours', 'Minutes', 'Seconds'];
@@ -31,6 +31,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     renderMap = defaultRenderMap,
     hideOnComplete = true,
     stopOnHiddenVisibility = false,
+    renderOnServer = false,
     spacing,
     ...other
   } = props;
@@ -60,7 +61,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (stopOnHiddenVisibility) {
       const visibilityChangeHandler = () => {
         if (document.visibilityState === 'visible') {
@@ -86,7 +87,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     }
   }, [to, stopOnHiddenVisibility]);
 
-  const containerStyles = React.useMemo<React.CSSProperties>(() => {
+  const containerStyles = useMemo<React.CSSProperties>(() => {
     const s = {
       '--fcc-flip-duration': `${duration}s`,
       '--fcc-spacing': convertToPx(spacing?.clock),
@@ -140,6 +141,10 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
 
   if (state?.completed && hideOnComplete) {
     return <React.Fragment>{children}</React.Fragment>;
+  }
+
+  if (!renderOnServer && isServer()) {
+    return <React.Fragment></React.Fragment>;
   }
 
   return (

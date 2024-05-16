@@ -13,8 +13,8 @@ export function calcTimeDelta(target: Date | number | string): FlipClockCountdow
   if (isNaN(date.getTime())) {
     throw Error('Invalid date');
   }
-  const now = new Date();
-  let timeLeft = Math.round((date.getTime() - now.getTime()) / 1000); // convert to seconds
+  const now = Date.now();
+  let timeLeft = Math.round((date.getTime() - now) / 1000); // convert to seconds
   if (timeLeft < 0) timeLeft = 0;
 
   return {
@@ -57,4 +57,12 @@ export function convertToPx(n?: string | number): string | undefined {
   if (n === undefined) return undefined;
   if (typeof n === 'string') return n;
   return `${n}px`;
+}
+
+export function isServer() {
+  return typeof window === 'undefined';
+}
+
+export function isClient() {
+  return !isServer();
 }

@@ -38,10 +38,11 @@ The <code>FlipClockCountdown</code> has all properties of `div` and additional p
 | **digitBlockStyle**        |     <code>React.CSSProperties</code>      |    no    |                <code>undefined</code>                | The styles apply to digit blocks like `font-size`, `color`, `width`, `height`, etc.                                                                                              |
 | **separatorStyle**         |            <code>object</code>            |    no    |                <code>undefined</code>                | The styles apply to separator (colon), includes `size` and `color`.                                                                                                              |
 | **dividerStyle**           |            <code>object</code>            |    no    |                <code>undefined</code>                | The style will be applied to divider, includes `color` and `height`.                                                                                                             |
+| **spacing**                |            <code>object</code>            |    no    |                <code>undefined</code>                | This prop allows you to modify the clock spacing.                                                                                                                                |
 | **duration**               |            <code>number</code>            |    no    |                   <code>0.7</code>                   | Duration (in second) when flip card. Valid value in range (0, 1).                                                                                                                |
 | **hideOnComplete**         |           <code>boolean</code>            |    no    |                  <code>true</code>                   | By default, the countdown will be hidden when it completed (or show children if provided). This will keep the timer in place and stuck at zeros when the countdown is completed. |
 | **stopOnHiddenVisibility** |           <code>boolean</code>            |    no    |                  <code>false</code>                  | Whether or not to stop the clock when the visibilityState is hidden, enabling this feature will prevent the component gets derailed if we switch between browser tabs.           |
-| **spacing**                |            <code>object</code>            |    no    |                <code>undefined</code>                | This prop allows you to modify the clock spacing.                                                                                                                                |
+| **renderOnServer**         |           <code>boolean</code>            |    no    |                  <code>false</code>                  | Whether or not to render the clock on server.                                                                                                                                    |
 
 ## Usage
 
@@ -158,7 +159,7 @@ class Example extends Component {
   --fcc-digit-block-width: 40px; /* width of digit card */
   --fcc-digit-block-height: 60px; /* height of digit card, highly recommend in even number */
   --fcc-digit-block-radius: 5px; /* border radius of digit card */
-  --fcc-digit-block-spacing: 5px; /* Space between blocks in each unit of time. */
+  --fcc-digit-block-spacing: 5px; /* space between blocks in each unit of time */
   --fcc-digit-font-size: 30px; /* font size of digit */
   --fcc-digit-color: white; /* color of digit */
   --fcc-label-font-size: 10px; /* font size of label */

@@ -130,4 +130,10 @@ export interface FlipClockCountdownProps
      */
     digitBlock?: number | string;
   };
+  /**
+   * Whether or not to render the clock on server.
+   *
+   * @default false
+   */
+  renderOnServer?: boolean;
 }
