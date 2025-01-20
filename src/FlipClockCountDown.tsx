@@ -134,9 +134,11 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     const _labels = labels.length >= 4 ? labels.slice(0, 4) : defaultLabels;
     const times = Object.values(formatted) as FlipClockCountdownUnitTimeFormatted[];
     const keys = ['day', 'hour', 'minute', 'second'];
-    return _renderMap.map<[boolean, string, FlipClockCountdownUnitTimeFormatted, string]>((show, i) => {
-      return [show, keys[i], times[i], _labels[i]];
-    });
+    return _renderMap
+      .map<[boolean, string, FlipClockCountdownUnitTimeFormatted, string]>((show, i) => {
+        return [show, keys[i], times[i], _labels[i]];
+      })
+      .filter((item) => item[0]);
   }, [renderMap, state]);
 
   if (state?.completed && hideOnComplete) {

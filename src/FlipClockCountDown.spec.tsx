@@ -169,14 +169,14 @@ test('should render the countdown with separators', () => {
 
 test('show/hide section works', () => {
   render(
-    <FlipClockCountdown to={new Date().getTime() + 24 * 3600 * 1000 + 5000} renderMap={[false, true, true, true]} />
+    <FlipClockCountdown to={new Date().getTime() + 24 * 3600 * 1000 + 5000} renderMap={[true, true, true, false]} />
   );
   const container = screen.getByTestId('fcc-container');
   expect(container.children.length).toEqual(3 + 2); // 3 rendered sections and 2 separators
-  expect(() => screen.getByText('Days')).toThrow();
+  expect(screen.getByText('Days')).toBeInTheDocument();
   expect(screen.getByText('Hours')).toBeInTheDocument();
   expect(screen.getByText('Minutes')).toBeInTheDocument();
-  expect(screen.getByText('Seconds')).toBeInTheDocument();
+  expect(() => screen.getByText('Seconds')).toThrow();
 
   // renderMap reset to default [true, true, true, true]
   cleanup();

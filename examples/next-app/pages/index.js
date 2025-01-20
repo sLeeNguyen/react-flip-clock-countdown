@@ -68,7 +68,7 @@ const Example = () => {
         <FlipClockCountdown
           className='flip-clock'
           to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
-          renderMap={[false, true, true, true]}
+          renderMap={[true, true, true, false]}
         />
       </div>
     </React.Fragment>
