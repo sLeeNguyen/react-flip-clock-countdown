@@ -199,3 +199,35 @@ test('show/hide section works', () => {
   expect(() => screen.getByText('Days')).toThrow();
   expect(() => screen.getByText('Minutes')).toThrow();
 });
+
+test('should render the countdown with daysInHours enabled', () => {
+  render(
+    <FlipClockCountdown
+      to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
+      daysInHours={true}
+      renderMap={[true, true, true, true]}
+    />
+  );
+  expect(() => screen.getByText('Days')).toThrow();
+  expect(screen.getByText('Hours')).toBeInTheDocument();
+  expect(screen.getByText('Minutes')).toBeInTheDocument();
+  expect(screen.getByText('Seconds')).toBeInTheDocument();
+
+  const container = screen.getByTestId('fcc-container');
+  expect(container.children.length).toEqual(3 + 2); // 3 rendered sections and 2 separators
+
+  cleanup();
+  render(
+    <FlipClockCountdown
+      to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
+      daysInHours={true}
+      renderMap={[true, false, true, false]}
+    />
+  );
+  const container2 = screen.getByTestId('fcc-container');
+  expect(() => screen.getByText('Days')).toThrow();
+  expect(() => screen.getByText('Hours')).toThrow();
+  expect(screen.getByText('Minutes')).toBeInTheDocument();
+  expect(() => screen.getByText('Seconds')).toThrow();
+  expect(container2.children.length).toEqual(1); // 1 rendered section
+});

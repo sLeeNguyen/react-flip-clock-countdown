@@ -31,8 +31,23 @@ export type FlipClockCountdownTimeDeltaFn = (props: FlipClockCountdownState) => 
 
 export interface FlipClockCountdownProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  /**
+   * The target date to countdown to.
+   * It can be a Date object, a timestamp (number), or a date string.
+   */
   readonly to: Date | number | string;
-
+  /**
+   * Days will be shown in hours.
+   *
+   * @default false
+   */
+  readonly daysInHours?: boolean;
+  /**
+   * Alternative handler for the current time.
+   *
+   * @default Date.now
+   */
+  now?: () => Date | number | string;
   /**
    * By default, the countdown will be hidden when it completed (or show children if provided).
    * This will keep the timer in place and stuck at zeros when the countdown is completed.
@@ -131,7 +146,8 @@ export interface FlipClockCountdownProps
     digitBlock?: number | string;
   };
   /**
-   * Whether or not to render the clock on server.
+   * Whether or not to render the clock on the server.
+   * If set to `true`, the clock will be rendered on the server side with zeros.
    *
    * @default false
    */

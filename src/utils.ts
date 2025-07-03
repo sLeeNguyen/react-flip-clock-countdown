@@ -8,13 +8,21 @@ export const defaultTimeDelta = {
   seconds: 0
 };
 
-export function calcTimeDelta(target: Date | number | string): FlipClockCountdownTimeDelta {
-  const date = new Date(target);
-  if (isNaN(date.getTime())) {
+export function isValidDate(date: Date | number | string): boolean {
+  const d = new Date(date);
+  return !isNaN(d.getTime());
+}
+
+export function calcTimeDelta(
+  target: Date | number | string,
+  current: Date | number | string
+): FlipClockCountdownTimeDelta {
+  if (!isValidDate(target) || !isValidDate(current)) {
     throw Error('Invalid date');
   }
-  const now = Date.now();
-  let timeLeft = Math.round((date.getTime() - now) / 1000); // convert to seconds
+  const now = new Date(current);
+  const date = new Date(target);
+  let timeLeft = Math.round((date.getTime() - now.getTime()) / 1000); // convert to seconds
   if (timeLeft < 0) timeLeft = 0;
 
   return {
@@ -30,17 +38,29 @@ export function pad(n: number): Digit[] {
   return ('0'.repeat(Math.max(0, 2 - String(n).length)) + String(n)).split('');
 }
 
-export function parseTimeDelta(timeDelta: FlipClockCountdownTimeDelta): FlipClockCountdownTimeDeltaFormatted {
-  const nextTimeDelta = calcTimeDelta(new Date().getTime() + (timeDelta.total - 1) * 1000);
+export function parseTimeDelta(
+  timeDelta: FlipClockCountdownTimeDelta,
+  current: Date | number | string,
+  daysInHours: boolean
+): FlipClockCountdownTimeDeltaFormatted {
+  console.log(current);
+  const nextTimeLeft = Math.max(0, timeDelta.total - 1);
+  const nextTimeDelta = {
+    total: nextTimeLeft,
+    days: Math.floor(nextTimeLeft / (24 * 60 * 60)),
+    hours: Math.floor((nextTimeLeft / 3600) % 24),
+    minutes: Math.floor((nextTimeLeft / 60) % 60),
+    seconds: Math.floor(nextTimeLeft % 60)
+  };
 
   return {
     days: {
-      current: pad(timeDelta.days),
-      next: pad(nextTimeDelta.days)
+      current: pad(daysInHours ? 0 : timeDelta.days),
+      next: pad(daysInHours ? 0 : nextTimeDelta.days)
     },
     hours: {
-      current: pad(timeDelta.hours),
-      next: pad(nextTimeDelta.hours)
+      current: pad((daysInHours ? timeDelta.days : 0) * 24 + timeDelta.hours),
+      next: pad((daysInHours ? timeDelta.days : 0) * 24 + nextTimeDelta.hours)
     },
     minutes: {
       current: pad(timeDelta.minutes),

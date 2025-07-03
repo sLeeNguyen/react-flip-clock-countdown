@@ -1,10 +1,10 @@
 import styles from './styles.module.css';
 //
 import clsx from 'clsx';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import FlipClockDigit from './FlipClockDigit';
 import { FlipClockCountdownProps, FlipClockCountdownState, FlipClockCountdownUnitTimeFormatted } from './types';
-import { calcTimeDelta, convertToPx, isServer, parseTimeDelta } from './utils';
+import { calcTimeDelta, convertToPx, parseTimeDelta } from './utils';
 
 const defaultRenderMap = [true, true, true, true];
 const defaultLabels = ['Days', 'Hours', 'Minutes', 'Seconds'];
@@ -15,6 +15,8 @@ const defaultLabels = ['Days', 'Hours', 'Minutes', 'Seconds'];
 function FlipClockCountdown(props: FlipClockCountdownProps) {
   const {
     to,
+    daysInHours = false,
+    now = Date.now,
     className,
     style,
     children,
@@ -36,7 +38,12 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     ...other
   } = props;
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
-  const [state, setState] = React.useState<FlipClockCountdownState>(constructState);
+  const [state, setState] = React.useState<FlipClockCountdownState>(() => ({
+    timeDelta: calcTimeDelta(0, now()),
+    completed: false
+  }));
+  const [isRealState, setIsRealState] = useState(renderOnServer);
+  const [isTransitionReady, setIsTransitionReady] = useState(false);
   const countdownRef = React.useRef(0);
 
   function clearTimer() {
@@ -44,7 +51,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
   }
 
   function constructState(): FlipClockCountdownState {
-    const timeDelta = calcTimeDelta(to);
+    const timeDelta = calcTimeDelta(to, now());
     return {
       timeDelta,
       completed: timeDelta.total === 0
@@ -55,36 +62,50 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     const newState = constructState();
     setState(newState);
     onTick(newState);
+
     if (newState.completed) {
       clearTimer();
       onComplete();
     }
+
+    if (!isRealState) {
+      setIsRealState(true);
+    }
+    if (!isTransitionReady) {
+      window.setTimeout(() => setIsTransitionReady(true), 900);
+    }
   }
 
+  const tickRef = useRef(tick);
+  tickRef.current = tick;
+
   useEffect(() => {
+    let clearFn: () => void = () => {};
     if (stopOnHiddenVisibility) {
       const visibilityChangeHandler = () => {
         if (document.visibilityState === 'visible') {
-          tick();
-          countdownRef.current = window.setInterval(tick, 1000);
+          tickRef.current();
+          countdownRef.current = window.setInterval(() => tickRef.current(), 1000);
         } else {
           clearTimer();
         }
       };
       visibilityChangeHandler();
       document.addEventListener('visibilitychange', visibilityChangeHandler);
-      return () => {
+      clearFn = () => {
         clearTimer();
         document.removeEventListener('visibilitychange', visibilityChangeHandler);
       };
     } else {
       clearTimer();
-      tick();
-      countdownRef.current = window.setInterval(tick, 1000);
-      return () => {
+      tickRef.current();
+      countdownRef.current = window.setInterval(() => tickRef.current(), 1000);
+      clearFn = () => {
         clearTimer();
       };
     }
+
+    return clearFn;
   }, [to, stopOnHiddenVisibility]);
 
   const containerStyles = useMemo<React.CSSProperties>(() => {
@@ -129,8 +150,11 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
   }, [digitBlockStyle]);
 
   const sections = React.useMemo(() => {
-    const formatted = parseTimeDelta(state.timeDelta);
+    const formatted = parseTimeDelta(state.timeDelta, now(), daysInHours);
     const _renderMap = renderMap.length >= 4 ? renderMap.slice(0, 4) : defaultRenderMap;
+    if (daysInHours) {
+      _renderMap[0] = false; // Hide days if daysInHours is true
+    }
     const _labels = labels.length >= 4 ? labels.slice(0, 4) : defaultLabels;
     const times = Object.values(formatted) as FlipClockCountdownUnitTimeFormatted[];
     const keys = ['day', 'hour', 'minute', 'second'];
@@ -145,7 +169,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     return <React.Fragment>{children}</React.Fragment>;
   }
 
-  if (!renderOnServer && isServer()) {
+  if (!isRealState) {
     return <React.Fragment></React.Fragment>;
   }
 
@@ -180,6 +204,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
                   next={item.next[cIdx]}
                   style={_digitBlockStyle}
                   className={`fcc__digit_block--${key}`}
+                  ready={isTransitionReady}
                 />
               ))}
             </div>

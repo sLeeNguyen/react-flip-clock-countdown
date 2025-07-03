@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import FlipClockCountdown from 'react-flip-clock-countdown';
 
 const Example = () => {
+  const [t] = useState(Date.now() + 5 * 1000);
   return (
     <React.Fragment>
       <h1>React flip-clock countdown</h1>
       <div style={{ marginBottom: 30 }}>
         <h2>Default</h2>
         <FlipClockCountdown
-          to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
+          to={new Date().getTime() + 2 * 24 * 3600 * 1000 + 5000}
+          now={() => {
+            return Math.max(Date.now(), t);
+          }}
           stopOnHiddenVisibility
           spacing={{
             clock: 16,
@@ -18,6 +22,18 @@ const Example = () => {
         >
           Finished
         </FlipClockCountdown>
+      </div>
+      <div style={{ marginBottom: 30 }}>
+        <h2>Days in Hours</h2>
+        <div style={{ marginBottom: 16 }}>
+          <FlipClockCountdown
+            to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
+            daysInHours={true}
+            renderOnServer={true}
+          >
+            Finished
+          </FlipClockCountdown>
+        </div>
       </div>
       <div style={{ marginBottom: 30 }}>
         <h2>Custom styles</h2>
