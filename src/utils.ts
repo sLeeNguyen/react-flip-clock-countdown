@@ -40,10 +40,8 @@ export function pad(n: number): Digit[] {
 
 export function parseTimeDelta(
   timeDelta: FlipClockCountdownTimeDelta,
-  current: Date | number | string,
   daysInHours: boolean
 ): FlipClockCountdownTimeDeltaFormatted {
-  console.log(current);
   const nextTimeLeft = Math.max(0, timeDelta.total - 1);
   const nextTimeDelta = {
     total: nextTimeLeft,

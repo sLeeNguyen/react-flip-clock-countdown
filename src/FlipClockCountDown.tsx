@@ -150,7 +150,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
   }, [digitBlockStyle]);
 
   const sections = React.useMemo(() => {
-    const formatted = parseTimeDelta(state.timeDelta, now(), daysInHours);
+    const formatted = parseTimeDelta(state.timeDelta, daysInHours);
     const _renderMap = renderMap.length >= 4 ? renderMap.slice(0, 4) : defaultRenderMap;
     if (daysInHours) {
       _renderMap[0] = false; // Hide days if daysInHours is true
