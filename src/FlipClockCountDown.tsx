@@ -163,7 +163,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
         return [show, keys[i], times[i], _labels[i]];
       })
       .filter((item) => item[0]);
-  }, [renderMap, state]);
+  }, [labels, renderMap, state]);
 
   if (state?.completed && hideOnComplete) {
     return <React.Fragment>{children}</React.Fragment>;
