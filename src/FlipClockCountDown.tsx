@@ -3,7 +3,12 @@ import styles from './styles.module.css';
 import clsx from 'clsx';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import FlipClockDigit from './FlipClockDigit';
-import { FlipClockCountdownProps, FlipClockCountdownState, FlipClockCountdownUnitTimeFormatted } from './types';
+import {
+  FlipClockCountdownProps,
+  FlipClockCountdownState,
+  FlipClockCountdownUnitTimeFormatted,
+  FlipClockCountdownLabel
+} from './types';
 import { calcTimeDelta, convertToPx, parseTimeDelta } from './utils';
 
 const defaultRenderMap = [true, true, true, true];
@@ -159,7 +164,7 @@ function FlipClockCountdown(props: FlipClockCountdownProps) {
     const times = Object.values(formatted) as FlipClockCountdownUnitTimeFormatted[];
     const keys = ['day', 'hour', 'minute', 'second'];
     return _renderMap
-      .map<[boolean, string, FlipClockCountdownUnitTimeFormatted, string]>((show, i) => {
+      .map<[boolean, string, FlipClockCountdownUnitTimeFormatted, FlipClockCountdownLabel]>((show, i) => {
         return [show, keys[i], times[i], _labels[i]];
       })
       .filter((item) => item[0]);

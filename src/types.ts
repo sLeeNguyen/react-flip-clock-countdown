@@ -29,6 +29,8 @@ export interface FlipClockCountdownState {
 
 export type FlipClockCountdownTimeDeltaFn = (props: FlipClockCountdownState) => void;
 
+export type FlipClockCountdownLabel = string | React.ReactElement;
+
 export interface FlipClockCountdownProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   /**
@@ -83,7 +85,12 @@ export interface FlipClockCountdownProps
    *
    * @default ['Days', 'Hours', 'Minutes', 'Seconds']
    */
-  readonly labels?: [string, string, string, string];
+  readonly labels?: [
+    FlipClockCountdownLabel,
+    FlipClockCountdownLabel,
+    FlipClockCountdownLabel,
+    FlipClockCountdownLabel
+  ];
   /**
    * Set it to `false` if you don't want to show the labels.
    *
