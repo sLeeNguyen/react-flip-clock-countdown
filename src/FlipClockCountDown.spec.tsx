@@ -231,3 +231,63 @@ test('should render the countdown with daysInHours enabled', () => {
   expect(() => screen.getByText('Seconds')).toThrow();
   expect(container2.children.length).toEqual(1); // 1 rendered section
 });
+
+test('should render the countdown with ReactElement labels', () => {
+  render(
+    <FlipClockCountdown
+      to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
+      labels={[
+        <span data-testid='custom-days'>DAYS</span>,
+        <span data-testid='custom-hours'>HOURS</span>,
+        <span data-testid='custom-minutes'>MINUTES</span>,
+        <span data-testid='custom-seconds'>SECONDS</span>
+      ]}
+    />
+  );
+  expect(screen.getByTestId('custom-days')).toBeInTheDocument();
+  expect(screen.getByTestId('custom-hours')).toBeInTheDocument();
+  expect(screen.getByTestId('custom-minutes')).toBeInTheDocument();
+  expect(screen.getByTestId('custom-seconds')).toBeInTheDocument();
+  expect(screen.getByText('DAYS')).toBeInTheDocument();
+  expect(screen.getByText('HOURS')).toBeInTheDocument();
+  expect(screen.getByText('MINUTES')).toBeInTheDocument();
+  expect(screen.getByText('SECONDS')).toBeInTheDocument();
+});
+
+test('should render the countdown with mixed string and ReactElement labels', () => {
+  render(
+    <FlipClockCountdown
+      to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
+      labels={[<strong data-testid='bold-days'>D</strong>, 'H', <em data-testid='italic-minutes'>M</em>, 'S']}
+    />
+  );
+  expect(screen.getByTestId('bold-days')).toBeInTheDocument();
+  expect(screen.getByText('D')).toBeInTheDocument();
+  expect(screen.getByText('H')).toBeInTheDocument();
+  expect(screen.getByTestId('italic-minutes')).toBeInTheDocument();
+  expect(screen.getByText('M')).toBeInTheDocument();
+  expect(screen.getByText('S')).toBeInTheDocument();
+});
+
+test('should render the countdown with complex ReactElement labels containing icons and text', () => {
+  const DayLabel = () => (
+    <div data-testid='complex-label'>
+      <span role='img' aria-label='calendar'>
+        📅
+      </span>{' '}
+      Days
+    </div>
+  );
+
+  render(
+    <FlipClockCountdown
+      to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
+      labels={[<DayLabel />, 'Hours', 'Minutes', 'Seconds']}
+    />
+  );
+
+  expect(screen.getByTestId('complex-label')).toBeInTheDocument();
+  expect(screen.getByRole('img', { name: 'calendar' })).toBeInTheDocument();
+  expect(screen.getByText('Days')).toBeInTheDocument();
+  expect(screen.getByText('Hours')).toBeInTheDocument();
+});

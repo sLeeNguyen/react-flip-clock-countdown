@@ -42,6 +42,26 @@ const App = () => {
             labels={['DAYS', 'HOURS', 'MINUTES', 'SECONDS']}
           />
         </div>
+
+        <h2>Element labels</h2>
+        <div style={{ marginBottom: 70 }}>
+          <FlipClockCountdown
+            className='flip-clock'
+            to={new Date().getTime() + 24 * 3600 * 1000 + 5000}
+            labels={[
+              <div>
+                Element
+                <br />
+                Label
+                <br />
+                with BR Tag
+              </div>,
+              'HOURS',
+              'MINUTES',
+              'SECONDS'
+            ]}
+          />
+        </div>
         <div>
           <FlipClockCountdown
             className='flip-clock'
